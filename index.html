@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Continua</title>
+<meta name="description" content="Tokenisation brought the assets on chain, not the markets. Continua brings the markets.">
+<meta name="theme-color" content="#F2F0E9">
+<meta property="og:title" content="Continua">
+<meta property="og:description" content="Tokenisation brought the assets on chain, not the markets. Continua brings the markets.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http%3A//www.w3.org/2000/svg' viewBox='0 0 462 462'><path d='M164.77 283.05C193.452 283.05 216.704 259.737 216.704 230.98C216.704 202.222 193.452 178.909 164.77 178.909C136.088 178.909 112.836 202.222 112.836 230.98C112.836 259.737 136.088 283.05 164.77 283.05Z' fill='%23EEAD2B'/><path d='M255.158 310.691C259.536 282.27 251.596 257.452 237.422 255.257C223.249 253.062 208.211 274.322 203.833 302.743C199.454 331.164 207.395 355.982 221.568 358.177C235.741 360.372 250.78 339.112 255.158 310.691Z' fill='%230B82CB'/><path d='M331.725 322.144C336.796 317.061 324.465 296.455 304.183 276.12C283.902 255.786 263.35 243.422 258.28 248.506C253.209 253.59 265.54 274.195 285.822 294.53C306.103 314.865 326.655 327.228 331.725 322.144Z' fill='%23EEAD2B'/><path d='M304.484 186.253C324.766 165.918 337.097 145.313 332.026 140.229C326.956 135.145 306.404 147.509 286.123 167.844C265.841 188.178 253.51 208.784 258.581 213.868C263.651 218.951 284.203 206.588 304.484 186.253Z' fill='%230B82CB'/><path d='M237.57 206.831C251.756 204.728 259.857 179.961 255.662 151.513C251.467 123.064 236.565 101.707 222.378 103.81C208.191 105.913 200.091 130.68 204.286 159.128C208.481 187.577 223.383 208.934 237.57 206.831Z' fill='%23DB3829'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400;500;600;700&family=Martian+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#F2F0E9; --ink:#100E0A; --blue:#0B82CB; --red:#DB3829; --yellow:#EEAD2B;
+    --bg:#F2F0E9; --fg:#100E0A;
+    --pad:clamp(20px,3.4vw,52px);
+    --ease:cubic-bezier(.16,1,.3,1);
+    --field:cubic-bezier(.6,.02,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--fg);
+    font-family:'Lexend',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;
+    overflow:hidden;transition:background-color .62s var(--field),color .62s var(--field)}
+
+  /* the two General artworks, rebuilt as one canvas */
+  #art{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0}
+
+  .shell{position:relative;z-index:20;height:100%;display:grid;
+    grid-template-rows:1fr auto;gap:clamp(14px,2.4vh,26px);
+    padding:calc(var(--pad) + env(safe-area-inset-top,0px))
+            calc(var(--pad) + env(safe-area-inset-right,0px))
+            calc(var(--pad) + env(safe-area-inset-bottom,0px))
+            calc(var(--pad) + env(safe-area-inset-left,0px))}
+  main{display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,2.4vh,30px)}
+
+  /* the card. solid, not frosted — blurring the artwork behind it turned
+     the brand's crisp ellipses into smudge. a hairline edge and a long soft
+     drop do the separating instead, and the grid stays sharp right up to it. */
+  .plate{position:relative;isolation:isolate;
+    display:flex;flex-direction:column;align-items:flex-start;
+    gap:clamp(22px,2.8vh,32px);
+    padding:clamp(26px,3.1vw,44px) clamp(26px,3.1vw,46px) clamp(28px,3.2vw,46px);
+    border-radius:clamp(20px,2.1vw,30px);
+    background:var(--bg);
+    border:1.5px solid color-mix(in srgb,var(--fg) 15%,transparent);
+    box-shadow:0 1px 2px color-mix(in srgb,var(--fg) 8%,transparent),
+               0 26px 64px -30px color-mix(in srgb,var(--fg) 62%,transparent);
+    transition:background-color .62s var(--field),border-color .62s var(--field)}
+
+  .word{font-weight:600;letter-spacing:-.06em;line-height:.84;
+    display:block;overflow:hidden;padding-bottom:.07em}
+  .word i{display:block;font-style:normal;transform:translateY(112%);
+    animation:up 1.05s var(--ease) .22s both}
+  @keyframes up{to{transform:translateY(0)}}
+  @keyframes fade{to{opacity:1}}
+
+  .line{font-weight:300;line-height:1.46;letter-spacing:-.018em}
+  .line > span{display:block;overflow:hidden;padding-bottom:.09em}
+  .line > span > i{display:block;font-style:normal;transform:translateY(112%);
+    animation:up .95s var(--ease) both}
+  .line > span:nth-child(1) > i{animation-delay:.42s}
+  .line > span:nth-child(2) > i{animation-delay:.52s;white-space:nowrap}
+  .off{display:inline;position:relative;white-space:nowrap;opacity:.44}
+  .off::after{content:"";position:absolute;left:-.02em;right:-.02em;top:55%;height:.07em;
+    border-radius:2px;background:currentColor;transform:scaleX(0);transform-origin:left;
+    animation:sx .62s var(--ease) 1.02s both}
+  @keyframes sx{to{transform:scaleX(1)}}
+  .on{display:inline;font-weight:500;position:relative;white-space:nowrap}
+  .on::after{content:"";position:absolute;left:0;right:0;bottom:-.07em;height:.08em;border-radius:3px;
+    background:currentColor;transform:scaleX(0);transform-origin:left;
+    animation:sx .7s var(--ease) 1.22s both}
+
+  .wl{width:100%;max-width:min(520px,100%);opacity:0;
+    animation:fade .8s var(--ease) 1.18s both}
+
+  /* a labelled rule above the field, so the ask has a header rather than
+     floating loose under the sentence */
+  .wl-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .wl-head span{font-family:'Martian Mono',monospace;font-size:clamp(8px,.6vw,9.5px);
+    letter-spacing:.24em;text-transform:uppercase;opacity:.5;white-space:nowrap}
+  .wl-head i{flex:1;height:1px;background:color-mix(in srgb,currentColor 17%,transparent)}
+
+  /* one field, with the button living inside it */
+  .wl-row{display:flex;align-items:center;gap:6px;
+    padding:5px 5px 5px 6px;border-radius:100px;
+    border:1.5px solid color-mix(in srgb,currentColor 22%,transparent);
+    background:color-mix(in srgb,currentColor 4%,transparent);
+    transition:border-color .25s var(--ease),background-color .25s var(--ease),
+      box-shadow .25s var(--ease)}
+  .wl-row:hover{border-color:color-mix(in srgb,currentColor 34%,transparent)}
+  .wl-row:focus-within{border-color:color-mix(in srgb,currentColor 62%,transparent);
+    background:color-mix(in srgb,currentColor 7%,transparent);
+    box-shadow:0 0 0 4px color-mix(in srgb,currentColor 9%,transparent)}
+  .wl input{flex:1 1 auto;min-width:0;border:0;background:none;outline:none;color:inherit;
+    font-family:'Lexend',sans-serif;font-weight:300;
+    font-size:clamp(14px,1.05vw,15.5px);
+    padding:clamp(11px,1.4vh,14px) clamp(10px,1.2vw,16px)}
+  .wl input::placeholder{color:color-mix(in srgb,var(--fg) 40%,transparent)}
+  .wl button{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
+    padding:clamp(11px,1.4vh,14px) clamp(18px,1.9vw,24px);
+    border:0;border-radius:100px;cursor:pointer;
+    background:var(--fg);color:var(--bg);
+    font-family:'Lexend',sans-serif;font-size:clamp(13px,.96vw,14.5px);font-weight:500;
+    letter-spacing:-.01em;white-space:nowrap;
+    transition:opacity .25s var(--ease),background-color .62s var(--field),color .62s var(--field)}
+  .wl button svg{width:15px;height:15px;flex:none;transition:transform .3s var(--ease)}
+  .wl button:hover svg{transform:translateX(3px)}
+  .wl button:disabled{opacity:.45;cursor:default}
+  .wl button:disabled svg{transform:none}
+  .wl input:focus-visible{outline:none}
+  .wl button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+  .wl-msg{margin:0;min-height:0;font-size:clamp(11.5px,.86vw,13px);
+    font-weight:300;opacity:.6;padding-left:18px}
+  .wl-msg:not(:empty){margin-top:13px}
+  .wl-msg.err{color:var(--err,var(--red));opacity:1}
+  .wl-msg.ok{opacity:1;font-weight:500}
+  .wl.done .wl-row,.wl.done .wl-head i{display:none}
+  .wl.done .wl-head{margin-bottom:0}
+  .wl.done .wl-msg{font-size:clamp(15px,1.2vw,18px);padding-left:0;opacity:1}
+  .wl.done .wl-msg:not(:empty){margin-top:10px}
+
+  footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    opacity:0;animation:fade .9s var(--ease) 1.4s both}
+  /* the toggle and the wordmark share the left of the row */
+  .fmeta{display:flex;align-items:center;gap:10px;min-width:0}
+  .fbar{display:flex;align-items:center;gap:14px;align-self:stretch;
+    padding:10px 18px;border-radius:100px;background:var(--bg);
+    border:1px solid color-mix(in srgb,var(--fg) 12%,transparent);
+    transition:background-color .62s var(--field)}
+  .mono{font-family:'Martian Mono',monospace;font-size:clamp(8px,.62vw,9.5px);
+    letter-spacing:.16em;text-transform:uppercase;opacity:.55}
+  .social{display:flex;gap:8px;flex-wrap:wrap}
+  .social a{display:inline-flex;align-items:center;gap:8px;
+    padding:9px 16px;border-radius:100px;text-decoration:none;color:inherit;
+    border:1px solid color-mix(in srgb,currentColor 20%,transparent);
+    background:var(--bg);
+    font-family:'Martian Mono',monospace;font-size:clamp(8.5px,.66vw,10px);
+    letter-spacing:.1em;text-transform:uppercase;opacity:.82;
+    transition:opacity .28s var(--ease),transform .28s var(--ease),
+      background-color .28s var(--ease),color .28s var(--ease),border-color .28s var(--ease)}
+  .social a svg{width:13px;height:13px;fill:currentColor;flex:none;transition:transform .3s var(--ease)}
+  .social a:hover{opacity:1;transform:translateY(-2px);background:var(--fg);color:var(--bg);
+    border-color:var(--fg)}
+  .social a:hover svg{transform:rotate(-10deg) scale(1.06)}
+  .social a:focus-visible{outline:2px solid currentColor;outline-offset:3px;opacity:1}
+
+  @media (max-width:860px){
+    html,body{height:auto;min-height:100%;overflow:visible}
+    .shell{height:auto;min-height:100svh}
+    main{padding:clamp(20px,4vh,44px) 0}
+    .off,.on,.line > span:nth-child(2) > i{white-space:normal}
+  }
+  @media (max-width:560px){
+    .social{width:100%}
+    .social a{flex:1 1 100%;justify-content:flex-start}
+    /* the button stays sized to its label so the field keeps its room */
+    .wl button{flex:0 0 auto;gap:6px;padding:13px 16px;font-size:13px}
+    .wl button svg{width:14px;height:14px}
+    .wl input{padding:13px 6px 13px 12px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+      transition-duration:.01ms!important}
+    .word i,.line > span > i{transform:none}
+    .off::after,.on::after{transform:scaleX(1)}
+    .wl,footer{opacity:1}
+  }
+
+  main{align-items:flex-start}
+  .plate{max-width:min(660px,100%)}
+  /* the name and the mark head the card, so the sentence has an author */
+  .lockup{display:flex;align-items:center;gap:clamp(11px,1.25vw,19px)}
+  .lockup .mk{width:clamp(38px,4.3vw,62px);height:auto;flex:none;display:block;
+    opacity:0;animation:fade .8s var(--ease) .28s both}
+  .word{font-size:clamp(34px,4.4vw,64px)}
+  .line{font-size:clamp(17px,1.95vw,29px);max-width:min(600px,100%)}
+
+  :root{--bg:#F2F0E9;--fg:#100E0A}
+  /* ══ light / dark ══
+     the toggle sits in the footer row, beside the wordmark. clicking it opens
+     the other mode out of the button like a sun coming up — a circle of the
+     new theme that grows until it has crossed the whole page. */
+  :root{--tt-size:clamp(40px,3.1vw,46px)}
+  .tt{flex:none;
+    width:var(--tt-size);height:var(--tt-size);
+    display:grid;place-items:center;padding:0;cursor:pointer;color:inherit;
+    border-radius:50%;background:var(--bg);
+    border:1px solid color-mix(in srgb,currentColor 26%,transparent);
+    transition:transform .45s var(--ease),border-color .45s var(--ease),
+      background-color .45s var(--ease)}
+  .tt:hover{transform:translateY(-2px) rotate(-14deg);
+    border-color:color-mix(in srgb,currentColor 52%,transparent)}
+  .tt:active{transform:translateY(0) rotate(-14deg)}
+  .tt:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+  .tt svg{grid-area:1/1;width:56%;height:56%;display:block;
+    fill:none;stroke:currentColor;stroke-width:1.7;
+    stroke-linecap:round;stroke-linejoin:round;
+    transition:opacity .5s var(--ease),transform .6s var(--ease)}
+  .tt .sun{opacity:0;transform:rotate(-80deg) scale(.5)}
+  :root[data-theme="dark"] .tt .sun{opacity:1;transform:none}
+  :root[data-theme="dark"] .tt .moon{opacity:0;transform:rotate(80deg) scale(.5)}
+
+  /* the new theme rides in on top of the old one */
+  ::view-transition-old(root){z-index:1;animation:none;mix-blend-mode:normal}
+  ::view-transition-new(root){z-index:2;animation:none;mix-blend-mode:normal}
+  .sunrise{position:fixed;inset:0;z-index:59;pointer-events:none}
+
+  /* ── dark: the card and the grid's own field turn to ink ── */
+  :root[data-theme="dark"]{--bg:#100E0A;--fg:#F2F0E9;--err:#F2958C}
+
+  /* ══════════════════════════════════════════════════════════════════
+     COMPACT — the whole page on one screen, nothing scrolling.
+     Every size is capped against the SHORT side of the viewport as well
+     as the long one, so the page keeps its proportions from a 320px
+     phone through a tablet, and in landscape as well as portrait. The
+     floors and ceilings on each clamp keep type readable at both ends.
+     ══════════════════════════════════════════════════════════════════ */
+  @media (max-width:860px),(max-height:600px){
+    :root{
+      --pad:clamp(16px,4.2vw,26px);
+      --tt-size:clamp(38px,5.2svh,46px)}
+
+    html,body{height:100%;height:100svh;overflow:hidden}
+    .shell{height:100%;gap:clamp(6px,1.2svh,16px)}
+    main{padding:0;min-height:0;gap:clamp(8px,1.7svh,22px)}
+
+    .line{font-size:clamp(12.5px,min(4.35vw,2.34svh),24px);max-width:min(520px,100%)}
+    /* a struck or underlined phrase stays in one piece, so the rule that
+       crosses it never breaks across two lines */
+    .off,.on{white-space:nowrap}
+
+    /* the ask stays on one row whatever the width */
+    .wl{max-width:min(520px,100%)}
+    .wl-head{margin-bottom:clamp(6px,1.1svh,13px)}
+    .wl-head span{font-size:clamp(7.5px,min(2.5vw,1.25svh),9.5px)}
+    .wl-row{flex-wrap:nowrap}
+    .wl input{flex:1 1 auto;min-width:0;
+      font-size:clamp(13px,min(3.9vw,2.1svh),15.5px);
+      padding:clamp(9px,1.6svh,14px) clamp(10px,3vw,16px)}
+    .wl button{flex:0 0 auto;
+      font-size:clamp(12.5px,min(3.7vw,2svh),14.5px);
+      padding:clamp(9px,1.6svh,14px) clamp(13px,3.8vw,22px)}
+    .wl-msg{min-height:0;font-size:clamp(10.5px,min(3.1vw,1.7svh),13px)}
+
+    /* the footer stacks: both links on one row, then the toggle and the
+       wordmark sharing the bottom row edge to edge */
+    footer{flex-direction:column-reverse;align-items:stretch;
+      gap:clamp(6px,1.1svh,12px);
+      padding-top:clamp(8px,1.3svh,16px)}
+    .fmeta{width:100%;gap:8px}
+    .fmeta .fbar{flex:1;justify-content:center;min-height:var(--tt-size);
+      padding:6px 16px}
+    .social{flex-direction:row;align-items:stretch;align-self:auto;
+      width:100%;gap:6px;flex-wrap:nowrap}
+    .social a{flex:1 1 0;width:auto;min-width:0;justify-content:center;
+      gap:6px;padding:clamp(7px,1.3svh,11px) 6px;
+      font-size:clamp(8px,min(2.55vw,1.3svh),10px);letter-spacing:.05em}
+    .social a span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .social a svg{width:11px;height:11px}
+
+    .word{font-size:clamp(24px,min(9vw,5.6svh),64px)}
+    .lockup{gap:clamp(8px,2.4vw,16px)}
+    .lockup .mk{width:clamp(22px,min(6.4vw,4svh),56px)}
+    .plate{max-width:100%;gap:clamp(8px,1.6svh,20px);
+      padding:clamp(14px,2.6svh,26px) clamp(14px,4vw,24px)}
+  }
+
+  /* two link labels only both fit on one line once the screen is wide enough
+     to hold them at full size; below that they take a row each and gain a
+     bigger tap target. The height condition keeps them side by side in
+     landscape, where the row is cheap and the vertical space is not — and
+     where the type has already been capped small enough to fit. */
+  @media (max-width:480px) and (min-height:520px){
+    .social{flex-direction:column;gap:5px}
+    .social a{max-width:none;padding:clamp(9px,1.5svh,12px) 10px}
+  }
+</style>
+<script>try{var _t=localStorage.getItem('continua-theme');if(_t)document.documentElement.dataset.theme=_t;}catch(e){}</script>
+</head>
+<body>
+
+<canvas id="art" aria-hidden="true"></canvas>
+
+
+<div class="shell">
+  <main>
+    <div class="plate">
+
+    <div class="lockup">
+      <svg class="mk" viewBox="104 96 236 272" role="img" aria-label="Continua"><path d="M164.77 283.05C193.452 283.05 216.704 259.737 216.704 230.98C216.704 202.222 193.452 178.909 164.77 178.909C136.088 178.909 112.836 202.222 112.836 230.98C112.836 259.737 136.088 283.05 164.77 283.05Z" fill="#EEAD2B"/><path d="M255.158 310.691C259.536 282.27 251.596 257.452 237.422 255.257C223.249 253.062 208.211 274.322 203.833 302.743C199.454 331.164 207.395 355.982 221.568 358.177C235.741 360.372 250.78 339.112 255.158 310.691Z" fill="#0B82CB"/><path d="M331.725 322.144C336.796 317.061 324.465 296.455 304.183 276.12C283.902 255.786 263.35 243.422 258.28 248.506C253.209 253.59 265.54 274.195 285.822 294.53C306.103 314.865 326.655 327.228 331.725 322.144Z" fill="#EEAD2B"/><path d="M304.484 186.253C324.766 165.918 337.097 145.313 332.026 140.229C326.956 135.145 306.404 147.509 286.123 167.844C265.841 188.178 253.51 208.784 258.581 213.868C263.651 218.951 284.203 206.588 304.484 186.253Z" fill="#0B82CB"/><path d="M237.57 206.831C251.756 204.728 259.857 179.961 255.662 151.513C251.467 123.064 236.565 101.707 222.378 103.81C208.191 105.913 200.091 130.68 204.286 159.128C208.481 187.577 223.383 208.934 237.57 206.831Z" fill="#DB3829"/></svg>
+      <h1 class="word"><i>Continua</i></h1>
+    </div>
+
+    <div class="line">
+      <span><i>Tokenisation brought the assets on chain, <span class="off">not the markets.</span></i></span>
+      <span><i>Continua brings <span class="on">the markets</span>.</i></span>
+    </div>
+
+    <form class="wl" id="wl" novalidate>
+      <div class="wl-head"><span>Waitlist</span><i></i></div>
+      <div class="wl-row">
+        <input id="wl-email" name="email" type="email" required inputmode="email"
+               placeholder="you@email.com" autocomplete="email" spellcheck="false"
+               aria-label="Email address">
+        <button type="submit" id="wl-btn">
+          <span>Join</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"
+            fill="none" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <p class="wl-msg" id="wl-msg" role="status" aria-live="polite"></p>
+    </form>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="fmeta">
+      <button class="tt" id="tt" type="button" aria-pressed="false"
+              aria-label="Switch to dark mode" title="Switch to dark mode">
+        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13.9A8.9 8.9 0 0 1 10.1 3.2 8.9 8.9 0 1 0 20.8 13.9Z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 1.8v2.6M12 19.6v2.6M22.2 12h-2.6M4.4 12H1.8M19.2 4.8l-1.9 1.9M6.7 17.3l-1.9 1.9M19.2 19.2l-1.9-1.9M6.7 6.7L4.8 4.8"/></svg>
+      </button>
+      <div class="fbar"><span class="mono">Continua Finance</span></div>
+    </div>
+    <nav class="social" aria-label="Social">
+      <a href="https://x.com/continuafi" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>X / continuafi</span></a>
+      <a href="https://t.me/continuafi" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        <span>Telegram / continuafi</span></a>
+    </nav>
+  </footer>
+
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   WAITLIST — paste your form endpoint below and nothing else
+   needs to change. Works with Formspree, Getform, Basin,
+   Formcarry, or any URL that accepts a JSON POST.
+     e.g. 'https://formspree.io/f/xxxxxxxx'
+   Until this is set, the form tells visitors it isn't connected
+   instead of pretending the signup worked.
+   ───────────────────────────────────────────────────────────── */
+const WAITLIST_ENDPOINT = 'https://formspree.io/f/xnpqakoq';
+
+(() => {
+  const f = document.getElementById('wl');
+  const input = document.getElementById('wl-email');
+  const btn = document.getElementById('wl-btn');
+  const msg = document.getElementById('wl-msg');
+  const set = (kind, text) => { msg.textContent = text; msg.className = 'wl-msg' + (kind ? ' ' + kind : ''); };
+
+  if (!WAITLIST_ENDPOINT) console.warn('[continua] WAITLIST_ENDPOINT is not set — the waitlist form cannot submit.');
+
+  f.addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = input.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      set('err', 'Enter a valid email address.'); input.focus(); return;
+    }
+    if (!WAITLIST_ENDPOINT) { set('err', 'The waitlist isn\u2019t connected yet.'); return; }
+    btn.disabled = true; input.readOnly = true; set('', 'Joining\u2026');
+    try {
+      const r = await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      f.classList.add('done');
+      set('ok', 'You\u2019re on the list.');
+    } catch (err) {
+      set('err', 'Something went wrong \u2014 try again.');
+      btn.disabled = false; input.readOnly = false;
+    }
+  });
+})();
+
+const CFG = {
+  "ground": "#F2F0E9",
+  "cell": 62,
+  "tempo": 3000,
+  "gridAlpha": 1,
+  "swipeMs": 5600,
+
+  /* each rhythm is a whole way of laying the sheet out: how the colour steps
+     across the grid (cx, cy), how the tilt runs (tx, ty), how tall and wide
+     the cells sit (rx, ry, vary, wx, wy), which way the wave travels, and how
+     hard each cell turns as it flips. Every one of them is a number, which is
+     what lets the sheet glide from one rhythm to the next instead of cutting. */
+  "rhythmMs": 15000,
+  "morphMs": 3000,
+  "rhythms": [
+    { "cx": 1, "cy": 3, "tx":  0.20, "ty":  0.36, "rx": 0.190, "ry": 0.340,
+      "vary": 0.22, "wx": 0.62, "wy": 0.44, "wave": "diag",   "twist": 0.42 },
+    { "cx": 2, "cy": 1, "tx":  0.34, "ty": -0.12, "rx": 0.235, "ry": 0.300,
+      "vary": 0.34, "wx": 0.34, "wy": 0.30, "wave": "radial", "twist": 0.26 },
+    { "cx": 3, "cy": 1, "tx": -0.06, "ty":  0.52, "rx": 0.150, "ry": 0.395,
+      "vary": 0.16, "wx": 0.90, "wy": 0.16, "wave": "vert",   "twist": 0.62 },
+    { "cx": 5, "cy": 2, "tx":  0.46, "ty":  0.22, "rx": 0.212, "ry": 0.325,
+      "vary": 0.42, "wx": 0.50, "wy": 0.74, "wave": "horz",   "twist": 0.34 }
+  ]
+};
+
+/* ══════════════════════════════════════════════════════════════════
+   Continua — General 01 (the grid) and General 07 (the chain),
+   rebuilt in canvas so every item can move on its own.
+   Behaviour is driven entirely by the CFG object above.
+   ══════════════════════════════════════════════════════════════════ */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cv = document.getElementById('art');
+  const ctx = cv.getContext('2d');
+  const TAU = Math.PI * 2;
+
+  /* the four inks of General 01, in roughly the proportions of the artwork */
+  const PALETTE = ['#EEAD2B','#EEAD2B','#EEAD2B','#0B82CB','#0B82CB','#0B82CB',
+                   '#DB3829','#DB3829','#DB3829','#100E0A'];
+  const CHAIN   = ['#EEAD2B','#DB3829','#0B82CB'];
+  /* a repeating colour cycle — eight long, so black lands about as often as it
+     does in the printed sheet, and the run never falls into an obvious stripe */
+  const RHYTHM  = ['#EEAD2B','#0B82CB','#DB3829','#EEAD2B','#0B82CB','#100E0A','#DB3829','#EEAD2B'];
+  /* the one ink cell in each run is the page's own ink — on a dark field it
+     becomes bone, so the sheet keeps the same rhythm either way */
+  window.onTheme = function (t) {
+    const d = t === 'dark';
+    PALETTE[9] = d ? '#F2F0E9' : '#100E0A';
+    RHYTHM[5]  = d ? '#F2F0E9' : '#100E0A';
+    CFG.ground = d ? '#100E0A' : '#F2F0E9';
+    if (CFG.aperture) {
+      CFG.aperture.inner = d ? '#100E0A' : '#F2F0E9';
+      CFG.aperture.rim   = d ? '#F2958C' : '#DB3829';
+    }
+    if (CFG.outer) {
+      CFG.outer = d ? ['#AF291D', '#086096', '#F2F0E9', '#8E620B']
+                    : ['#DB3829', '#0B82CB', '#100E0A', '#EEAD2B'];
+    }
+    fieldAt = -1;              /* drop the cached halo colour */
+  };
+
+  let W = 0, H = 0, cells = [], cols = 0, rows = 0, cw = 0;
+
+  /* whatever colour the page is showing right now */
+  const rootStyle = getComputedStyle(document.documentElement);
+  let fieldCache = '', fieldAt = -1;
+  function field() {
+    const now = (performance.now() / 200) | 0;
+    if (now !== fieldAt) { fieldAt = now; fieldCache = CFG.ground || rootStyle.getPropertyValue('--bg').trim() || '#F2F0E9'; }
+    return fieldCache;
+  }
+
+  /* deterministic per-cell randomness — the layout never reshuffles on resize */
+  function hash(x, y) {
+    let h = (x * 374761393 + y * 668265263) ^ 0x5bf03635;
+    h = (h ^ (h >>> 13)) * 1274126177;
+    return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+  }
+
+  function build() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    cw = Math.max(46, Math.min(CFG.cell, W / 9));
+    cols = Math.ceil(W / cw) + 3;
+    rows = Math.ceil(H / cw) + 3;
+
+    /* a cell only knows where it is. Everything else — its colour, its tilt,
+       its proportions — is read from whichever rhythm is running, so the sheet
+       can change rhythm without being rebuilt. */
+    cells = [];
+    for (let gy = 0; gy < rows; gy++) {
+      for (let gx = 0; gx < cols; gx++) {
+        cells.push({
+          gx, gy,
+          x: (gx - 1) * cw + cw / 2,
+          y: (gy - 1) * cw + cw / 2,
+          r1: hash(gx, gy), r2: hash(gx + 91, gy + 17), r3: hash(gx + 5, gy + 73),
+          seed: hash(gx + 91, gy + 17),
+          ci: -1, pend: -1        /* the ink it holds, and the one it owes */
+        });
+      }
+    }
+  }
+  new ResizeObserver(build).observe(cv); build();
+
+  /* ── the hand-off ──
+     the sheet holds one rhythm, then spends the last few seconds of its
+     fifteen crossing into the next. Because the crossing is a smoothstep over
+     every number at once — colour, tilt, height, width, wave — there is no
+     frame where anything jumps, and the loop closes on itself exactly. */
+  const RHY = CFG.rhythms || [];
+  const RH_MS = CFG.rhythmMs || 15000;
+  const MORPH = Math.min(0.6, (CFG.morphMs || 3000) / RH_MS);
+  const lerp = (a, b, k) => a + (b - a) * k;
+  let RA = RHY[0], RB = RHY[0], RE = 0;
+
+  function setRhythm(t) {
+    const n = RHY.length;
+    if (!n) return;
+    if (reduce || n === 1) { RA = RB = RHY[0]; RE = 0; return; }
+    const u = (t % (RH_MS * n)) / RH_MS;
+    const k = Math.floor(u), f = u - k;
+    const e = f < 1 - MORPH ? 0 : (f - (1 - MORPH)) / MORPH;
+    RE = e * e * (3 - 2 * e);
+    RA = RHY[k % n];
+    RB = RHY[(k + 1) % n];
+  }
+
+  /* how far through its flip a given cell is — this is what makes the
+     grid read as a wave rather than a hundred unrelated spinners */
+  function delayOf(kind, c, cx, cy) {
+    switch (kind) {
+      case 'horz':   return c.gx * 0.44;
+      case 'vert':   return c.gy * 0.46;
+      case 'radial': return Math.hypot(c.x - cx, c.y - cy) / cw * 0.52;
+      case 'vortex': return Math.atan2(c.y - cy, c.x - cx) * 1.9
+                          + Math.hypot(c.x - cx, c.y - cy) / cw * 0.26;
+      case 'rand':   return c.seed * TAU;
+      default:       return (c.gx + c.gy) * 0.34;   /* diagonal */
+    }
+  }
+
+  /* the swipe: a front that travels across the grid and briefly
+     spins and swells whatever it is passing over */
+  function swipeAt(kind, c, t, cx, cy) {
+    if (!CFG.swipeMs) return 0;
+    const span = (kind === 'vert') ? H : W;
+    const proj = (kind === 'vert') ? c.y
+               : (kind === 'radial' || kind === 'vortex') ? Math.hypot(c.x - cx, c.y - cy)
+               : c.x;
+    const band = span * 0.22;
+    const head = ((t % CFG.swipeMs) / CFG.swipeMs) * (span + band * 2) - band;
+    const d = (proj - head) / band;
+    return Math.exp(-d * d * 2.2);
+  }
+
+  function drawGrid(t) {
+    const cx = W / 2, cy = H / 2;
+    const spin = CFG.spin ? t * CFG.spin : 0;
+    const rhythmic = RHY.length > 0;
+
+    /* every number the rhythm carries is blended once a frame, and then the
+       whole sheet reads from that one set */
+    setRhythm(t);
+    const A = RA, B = RB, e = RE, L = RHYTHM.length;
+    const rxk   = rhythmic ? lerp(A.rx, B.rx, e) : 0;
+    const ryk   = rhythmic ? lerp(A.ry, B.ry, e) : 0;
+    const vary  = rhythmic ? lerp(A.vary, B.vary, e) : 0;
+    const wx    = rhythmic ? lerp(A.wx, B.wx, e) : 0;
+    const wy    = rhythmic ? lerp(A.wy, B.wy, e) : 0;
+    const tx    = rhythmic ? lerp(A.tx, B.tx, e) : 0;
+    const ty    = rhythmic ? lerp(A.ty, B.ty, e) : 0;
+    const twist = rhythmic ? lerp(A.twist, B.twist, e) : (CFG.twist || 0.42);
+    const waveA = rhythmic ? A.wave : (CFG.wave || 'diag');
+    const waveB = rhythmic ? B.wave : waveA;
+
+    if (spin) { ctx.save(); ctx.translate(cx, cy); ctx.rotate(spin); ctx.translate(-cx, -cy); }
+    ctx.globalAlpha = CFG.gridAlpha;
+
+    for (let i = 0; i < cells.length; i++) {
+      const c = cells[i];
+
+      let cRx, cRy, cRot, iA = 0, iB = 0;
+      if (rhythmic) {
+        cRy  = cw * ryk * (1 - vary + vary * (0.5 + 0.5 * Math.cos(c.gx * wx + c.gy * wy)));
+        cRx  = cw * rxk;
+        cRot = c.gx * tx + c.gy * ty;
+        iA = (c.gx * A.cx + c.gy * A.cy) % L;
+        iB = (c.gx * B.cx + c.gy * B.cy) % L;
+      } else {
+        cRy = cw * (0.27 + c.r2 * 0.15);
+        cRx = cw * (0.10 + c.r3 * 0.22);
+        cRot = c.r1 * TAU;
+      }
+
+      const dl = e === 0 ? delayOf(waveA, c, cx, cy)
+        : lerp(delayOf(waveA, c, cx, cy), delayOf(waveB, c, cx, cy), e);
+      const ph = reduce ? cRot : (t / CFG.tempo) * TAU + dl;
+      const sw = reduce ? 0
+        : e === 0 ? swipeAt(waveA, c, t, cx, cy)
+        : lerp(swipeAt(waveA, c, t, cx, cy), swipeAt(waveB, c, t, cx, cy), e);
+
+      /* ── the ink ──
+         two brand colours mixed together make a third that is not in the
+         palette, so nothing is ever blended. A cell takes the ink its next
+         rhythm gives it at the moment it is a sliver — the one point in its
+         flip where a change cannot be seen. The wave staggers those moments,
+         so the new colour runs across the sheet rather than landing at once. */
+      let fill;
+      if (rhythmic) {
+        if (c.ci < 0) c.ci = iA;
+        if (e > 0 && c.pend < 0 && iB !== c.ci) c.pend = iB;
+        if (c.pend >= 0 && Math.abs(Math.cos(ph)) < 0.14) { c.ci = c.pend; c.pend = -1; }
+        if (e === 0) { c.ci = iA; c.pend = -1; }
+        fill = RHYTHM[c.ci];
+      } else {
+        fill = PALETTE[(c.r1 * PALETTE.length) | 0];
+      }
+
+      /* |cos| takes the ellipse from full width down to a sliver and back —
+         the same range of shapes the printed artwork holds all at once */
+      const rx = cRx * (0.10 + 0.90 * Math.abs(Math.cos(ph))) * (1 + sw * 0.55);
+      const ry = cRy * (1 + sw * 0.35);
+      const rot = cRot + ph * twist + sw * 1.5;
+
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.rotate(rot);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, rx, ry, 0, 0, TAU);
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    if (spin) ctx.restore();
+  }
+
+  /* General 07 — the chain of solid beads, bent into an orbit around the grid */
+  function drawChain(t) {
+    const O = CFG.orbit;
+    if (!O) return;
+    const cx = W / 2, cy = H * (O.cy || 0.5);
+    const R = Math.min(W, H) * O.r;
+    const tilt = (O.tilt || 0) * Math.PI / 180;
+    const a0 = reduce ? 0.6 : t * O.speed;
+    const n = O.beads;
+
+    /* draw the far side of the orbit first so the chain reads as a ring */
+    const order = [];
+    for (let i = 0; i < n; i++) {
+      const a = a0 + i * O.gap;
+      order.push({ i, a, depth: Math.sin(a) });
+    }
+    order.sort((p, q) => p.depth - q.depth);
+
+    for (const b of order) {
+      const ex = Math.cos(b.a) * R, ey = Math.sin(b.a) * R * (O.squash || 0.42);
+      const x = cx + ex * Math.cos(tilt) - ey * Math.sin(tilt);
+      const y = cy + ex * Math.sin(tilt) + ey * Math.cos(tilt);
+
+      /* the chain tapers away from its head, exactly like the artwork */
+      const k = 1 - Math.abs((b.i / (n - 1)) - 0.5) * 2;   /* 0 at the ends, 1 in the middle */
+      const scale = (0.24 + k * 0.76) * (0.74 + b.depth * 0.26);
+      const base = Math.min(W, H) * O.size * scale;
+      const ph = reduce ? 0 : (t / (CFG.tempo * 1.15)) * TAU + b.i * 0.7;
+
+      const brx = base * (0.22 + 0.78 * Math.abs(Math.cos(ph)));
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(tilt + b.a * 0.5 + ph * 0.3);
+      ctx.globalAlpha = (O.alpha || 1) * (0.45 + 0.55 * ((b.depth + 1) / 2));
+
+      /* a ring of the page's own colour, so the chain sits clearly in front
+         of the grid instead of dissolving into it */
+      if (O.halo) {
+        const pad = Math.max(5, base * 0.13);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, brx + pad, base + pad, 0, 0, TAU);
+        ctx.fillStyle = field();
+        ctx.fill();
+      }
+
+      ctx.beginPath();
+      ctx.ellipse(0, 0, brx, base, 0, 0, TAU);
+      ctx.fillStyle = CHAIN[b.i % CHAIN.length];
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* aperture: the grid only exists inside a circle that keeps opening out */
+  let apI = -1;
+  function frame(t) {
+    ctx.clearRect(0, 0, W, H);
+
+    if (CFG.aperture) {
+      const cyc = CFG.aperture.cycle;
+      const p = reduce ? 0.999 : ((t % cyc) / cyc);
+      /* open, hold, then close again — so the flat field is seen as often
+         as the grid is, and the opening reads as a move rather than a state */
+      let e;
+      if (p < 0.62)      e = 1 - Math.pow(1 - p / 0.62, 3);
+      else if (p < 0.78) e = 1;
+      else               e = 1 - Math.pow((p - 0.78) / 0.22, 2);
+
+      /* the colour flash happens here on the canvas, not on the page, so the
+         card, the logo and every piece of type keep a stable ground */
+      apI = Math.floor(t / cyc);
+      const outer = CFG.outer[apI % CFG.outer.length];
+      ctx.fillStyle = outer;
+      ctx.fillRect(0, 0, W, H);
+
+      const maxR = Math.hypot(W, H) * 0.62;
+      const ax = W / 2, ay = H * CFG.aperture.y;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(ax, ay, Math.max(0.01, e * maxR), 0, TAU);
+      ctx.clip();
+      ctx.fillStyle = CFG.aperture.inner;
+      ctx.fillRect(0, 0, W, H);
+      drawGrid(t);
+      ctx.restore();
+
+      /* one hairline on the rim, so the opening reads as an edge */
+      ctx.beginPath();
+      ctx.arc(ax, ay, Math.max(0.01, e * maxR), 0, TAU);
+      ctx.strokeStyle = CFG.aperture.rim;
+      ctx.globalAlpha = 0.5 * (1 - e * 0.7);
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    } else {
+      ctx.fillStyle = CFG.ground;
+      ctx.fillRect(0, 0, W, H);
+      drawGrid(t);
+    }
+
+    drawChain(t);
+
+    /* a slab of flat colour sharing the page with the grid, its edge drifting */
+    if (CFG.split) {
+      const S = CFG.split;
+      const p = reduce ? 0.5 : 0.5 + Math.sin(t * S.speed) * 0.5;
+      const edge = W * (S.min + (S.max - S.min) * p);
+      ctx.fillStyle = S.colour;
+      ctx.fillRect(0, 0, edge, H);
+      ctx.fillStyle = S.rim;
+      ctx.globalAlpha = .5;
+      ctx.fillRect(edge - 2, 0, 2, H);
+      ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+})();
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   SUNRISE / SUNSET — the theme opens out of the toggle like a sun.
+   Where the browser supports view transitions the live page is what
+   grows; where it does not, a disc of the incoming ground does the
+   same travel and the page changes under it.
+   ══════════════════════════════════════════════════════════════════ */
+(() => {
+  const btn = document.getElementById('tt');
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const GROUND = { light: '#F2F0E9', dark: '#100E0A' };
+  const RISE = 1500;                       /* slow on purpose */
+
+  let theme = root.dataset.theme === 'dark' || root.dataset.theme === 'light'
+    ? root.dataset.theme : 'light';
+
+  function paint(t) {
+    root.dataset.theme = t;
+    btn.setAttribute('aria-pressed', String(t === 'dark'));
+    const label = t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+    btn.setAttribute('aria-label', label);
+    btn.setAttribute('title', label);
+    const m = document.querySelector('meta[name=theme-color]');
+    if (m) m.setAttribute('content', GROUND[t]);
+    if (typeof window.onTheme === 'function') window.onTheme(t);
+    try { localStorage.setItem('continua-theme', t); } catch (e) {}
+  }
+  paint(theme);
+
+  btn.addEventListener('click', () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    theme = next;
+
+    if (reduce) { paint(next); return; }
+
+    const r = btn.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    const from = 'circle(0px at ' + x + 'px ' + y + 'px)';
+    const to = 'circle(' + end + 'px at ' + x + 'px ' + y + 'px)';
+
+    if (document.startViewTransition && root.animate) {
+      const vt = document.startViewTransition(() => paint(next));
+      vt.ready.then(() => {
+        root.animate({ clipPath: [from, to] }, {
+          duration: RISE, easing: 'cubic-bezier(.34,0,.2,1)',
+          pseudoElement: '::view-transition-new(root)'
+        });
+      }).catch(() => {});
+      return;
+    }
+
+    /* the same rise, drawn by hand */
+    const ov = document.createElement('div');
+    ov.className = 'sunrise';
+    ov.style.background = GROUND[next];
+    ov.style.clipPath = from;
+    document.body.appendChild(ov);
+    requestAnimationFrame(() => {
+      ov.style.transition = 'clip-path ' + RISE + 'ms cubic-bezier(.34,0,.2,1)';
+      ov.style.clipPath = to;
+    });
+    setTimeout(() => {
+      paint(next);
+      ov.style.transition = 'opacity .45s linear';
+      ov.style.opacity = '0';
+      setTimeout(() => { ov.remove(); }, 470);
+    }, RISE);
+  });
+})();
+</script>
+</body>
+</html>
