@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Rate Market Should Not Be a Private Club — Continua</title>
+<meta name="description" content="Why the tools around interest rates should become easier to understand, and safer to reach, for people who are not institutions.">
+<meta name="theme-color" content="#F2F0E9">
+<meta property="og:title" content="The Rate Market Should Not Be a Private Club">
+<meta property="og:description" content="Why the tools around interest rates should become easier to understand, and safer to reach, for people who are not institutions.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Continua Finance">
+<meta property="og:url" content="https://continua.finance/note16">
+<meta property="og:image" content="https://continua.finance/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://continua.finance/og.png">
+<link rel="canonical" href="https://continua.finance/note16">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bone:#F2F0E9;--ink:#100E0A;--blue:#0B82CB;--red:#DB3829;--yellow:#EEAD2B;--bg:#F2F0E9;--fg:#100E0A;
+    --line:color-mix(in srgb,var(--fg) 14%,transparent);--line2:color-mix(in srgb,var(--fg) 32%,transparent);
+    --muted:color-mix(in srgb,var(--fg) 62%,transparent);--pad:clamp(20px,3.4vw,52px);--ease:cubic-bezier(.16,1,.3,1)}
+  :root[data-theme="dark"]{--bg:#100E0A;--fg:#F2F0E9}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:var(--bg)}
+  body{background:var(--bg);color:var(--fg);font-family:'Lexend',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  img,svg{max-width:100%;display:block}
+  .mono{font-family:'Martian Mono',monospace;text-transform:uppercase;letter-spacing:.18em;font-size:clamp(8.5px,.7vw,10.5px);line-height:1.5}
+  .wrap{width:min(1100px,calc(100% - var(--pad)*2));margin:0 auto}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .brand img{width:28px;height:28px}
+  .brand span{font-weight:600;letter-spacing:-.04em;font-size:18px}
+  .top a.back{text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:300;display:inline-flex;gap:8px;align-items:center}
+  .top a.back:hover{color:var(--fg)}
+
+  /* the post template: mark top-left, orbit lines right, title bottom-left */
+  .head{position:relative;overflow:hidden;border:1px solid var(--line2);border-radius:clamp(22px,2.6vw,34px);
+    min-height:min(520px,62vh);display:grid;align-content:end;padding:clamp(24px,3.4vw,48px);isolation:isolate}
+  .head .illo{position:absolute;right:-6%;top:-10%;width:58%;height:78%;z-index:0}
+  .head .illo ellipse{fill:none;stroke-width:2.2;stroke:currentColor}
+  .head .illo .k-r{color:var(--red)}.head .illo .k-b{color:var(--blue)}.head .illo .k-y{color:var(--yellow)}.head .illo .k-k{color:var(--fg)}
+  .head .illo .dash{stroke-dasharray:10 8}
+  .head .illo .dot{stroke-dasharray:0 7;stroke-linecap:round;stroke-width:2.6}
+  .head .illo .nodes circle{fill:var(--fg)}
+  .head .kicker{position:relative;z-index:1;color:var(--muted);margin-bottom:auto;display:flex;gap:18px;flex-wrap:wrap;align-self:start}
+  .head h1{position:relative;z-index:1;font-size:clamp(32px,4.8vw,66px);line-height:.98;letter-spacing:-.03em;font-weight:600;max-width:16ch;
+    margin-top:clamp(120px,22vh,220px)}
+  .head .sub{position:relative;z-index:1;margin-top:16px;font-weight:300;color:var(--muted);font-size:clamp(15px,1.5vw,20px);line-height:1.45;max-width:52ch}
+  .head .meta{position:relative;z-index:1;margin-top:22px;display:flex;gap:18px;flex-wrap:wrap;color:var(--muted)}
+  .head .meta span:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);margin-right:8px;vertical-align:1px}
+  .head .meta span:nth-child(2):before{background:var(--blue)}.head .meta span:nth-child(3):before{background:var(--red)}
+
+  .note{margin:clamp(22px,3vw,36px) auto 0;max-width:720px;border:1px solid var(--line2);border-radius:16px;padding:14px 18px;
+    display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;color:var(--muted);font-size:14px;font-weight:300;line-height:1.5}
+  .note svg{width:26px;height:26px;overflow:visible}
+  article{max-width:720px;margin:clamp(28px,4vw,56px) auto 0}
+  article p{font-weight:300;font-size:clamp(16.5px,1.35vw,19px);line-height:1.62;margin:0 0 1.15em;letter-spacing:-.005em}
+  article p:first-of-type::first-letter{font-weight:600;font-size:1.6em;line-height:1;padding-right:2px}
+  article h2{font-size:clamp(24px,2.6vw,36px);letter-spacing:-.03em;font-weight:600;line-height:1.05;margin:clamp(36px,4.5vw,56px) 0 16px;
+    display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+  article h2:before{content:"";width:22px;height:22px;border-radius:50%;border:2px solid var(--fg);display:block}
+  article h2:nth-of-type(2n):before{border-color:var(--yellow);border-style:dashed}
+  article h2:nth-of-type(3n):before{border-color:var(--blue);border-style:dotted;border-width:2.6px}
+  article h2:nth-of-type(4n):before{border-color:var(--red)}
+  .pull{font-weight:500!important;font-size:clamp(22px,2.4vw,32px)!important;line-height:1.2!important;letter-spacing:-.025em;
+    border-left:3px solid var(--yellow);padding:6px 0 6px 22px;margin:1.6em 0!important}
+  sup{font-size:.62em;line-height:0;vertical-align:.5em}
+  sup a{text-decoration:none;color:var(--blue);font-family:'Martian Mono',monospace;padding:0 2px}
+  .check{list-style:none;counter-reset:q;margin:0 0 1.4em;border-top:1px solid var(--line)}
+  .check li{counter-increment:q;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-weight:400;font-size:clamp(16px,1.3vw,18px)}
+  .check li:before{content:counter(q,decimal-leading-zero);font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--red)}
+  .gloss{display:grid;gap:0;border-top:1px solid var(--line);margin-bottom:1.4em}
+  .gloss div{display:grid;grid-template-columns:minmax(120px,.35fr) 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .gloss dt{font-weight:500;letter-spacing:-.01em}
+  .gloss dd{font-weight:300;color:var(--muted);line-height:1.5}
+  .sources{margin-top:clamp(36px,4.5vw,56px);border-top:1px solid var(--line2);padding-top:18px}
+  .sources ol{list-style:none;display:grid;gap:8px;margin-top:12px}
+  .sources li{font-size:13.5px;font-weight:300;color:var(--muted);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .sources li a{color:var(--fg);text-decoration:none;border-bottom:1px solid var(--line2);word-break:break-all}
+  .sources li a.back{border:0;color:var(--muted)}
+  .foot{margin:clamp(40px,6vw,80px) auto 40px;max-width:720px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line2);padding-top:22px;color:var(--muted)}
+  .foot a{text-decoration:none;font-weight:400;color:var(--fg);display:inline-flex;gap:8px;align-items:center}
+  .foot a:hover{text-decoration:underline}
+  @media(max-width:760px){.head .illo{width:100%;right:-14%;top:-12%;height:48%}.head h1{margin-top:clamp(140px,30vh,220px)}.gloss div{grid-template-columns:1fr;gap:4px}}
+</style>
+<script>try{var _t=localStorage.getItem('continua-theme');if(_t)document.documentElement.dataset.theme=_t;}catch(e){}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="index.html"><img src="assets/mark.svg" alt=""><span>Continua</span></a>
+    <a class="back" href="index.html#writing">← Back to the site</a>
+  </div>
+  <header class="head">
+    <svg class="illo" viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <ellipse cx="420" cy="150" rx="150" ry="150" class="k-r"/>
+  <ellipse cx="300" cy="300" rx="210" ry="120" class="k-y" transform="rotate(-22 300 300)"/>
+  <ellipse cx="500" cy="330" rx="120" ry="210" class="k-b dash" transform="rotate(30 500 330)"/>
+  <ellipse cx="180" cy="120" rx="170" ry="70" class="k-k dot" transform="rotate(14 180 120)"/>
+  <ellipse cx="360" cy="240" rx="250" ry="90" class="k-r dot" transform="rotate(-8 360 240)"/>
+  <ellipse cx="120" cy="360" rx="90" ry="140" class="k-b" transform="rotate(-30 120 360)"/>
+  <g class="nodes"><circle cx="296" cy="164" r="5"/><circle cx="452" cy="296" r="5"/><circle cx="171" cy="257" r="5"/><circle cx="521" cy="118" r="5"/></g>
+</svg>
+    <div class="kicker mono"><span>Note 16</span><span>Market structure</span><span>Revised</span></div>
+    <h1>The Rate Market Should Not Be a Private Club</h1>
+    <p class="sub">Why the tools around interest rates should become easier to understand, and safer to reach, for people who are not institutions.</p>
+    <div class="meta mono"><span>9 min read</span><span>Continua Finance</span><span>2026</span></div>
+  </header>
+  <aside class="note" role="note">
+    <svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="0 5" stroke-linecap="round"/><circle cx="13" cy="13" r="3" fill="currentColor"/></svg>
+    <div>This is educational market-structure content. It explains how markets work. It is not personal investment advice.</div>
+  </aside>
+  <article>
+    <p>The instruments that shape ordinary life are often the instruments ordinary people understand least.</p><p>That is the uncomfortable truth sitting underneath the rate market.</p><p>Your mortgage rate is influenced by the yield curve. Your savings rate is influenced by short-term funding conditions. Your pension is affected by long-term rates. Your employer’s debt costs may be hedged with swaps. Government borrowing costs move through the bond market.</p><p>Yet the most flexible layer of this market is still built mainly for institutions.</p><p>Be precise about that, because the claim is often overstated. Not everything in rates is closed. TreasuryDirect says individuals can buy Treasury marketable securities with a minimum purchase amount of $100.<sup><a href="#src-17">17</a></sup> Futures and bond ETFs exist. Savings accounts and money-market funds give ordinary people some rate exposure.</p><p class="pull">The gap is not access to the asset. It is access to the tools.</p><p>Over-the-counter, or OTC, means privately negotiated rather than traded like a simple public exchange order. BIS says OTC derivatives statistics capture outstanding positions of derivatives dealers, mainly banks.<sup><a href="#src-2">2</a></sup> That tells you where the center of gravity is.</p><p>The dealer market has swaps, bespoke hedges, structured funding, repo relationships, basis packages and curve trades. Everyone else mostly receives the consequences: mortgage quotes, savings rates, pension statements and headlines.</p><h2>Why the gap exists, and what it would take to close it</h2><p>The gap is not a conspiracy. It is an artifact of how the instruments are built.</p><p>An interest-rate swap is a bilateral contract that performs over years. Before it can begin, two parties need onboarding, credit approval, a master agreement, a collateral schedule, settlement instructions and, in most cases, access to a clearing house. That machinery exists because the obligation runs into the future and someone has to guarantee it.</p><p>That machinery also has a fixed cost, and the fixed cost sets a minimum viable size. Below it, the trade is not refused for reasons of snobbery. It is refused because the paperwork costs more than the hedge is worth.</p><p>So the honest version of the problem is not “banks will not let people in.” It is: the only instrument that expresses this exposure carries an overhead that excludes most of the people who have the exposure.</p><p>Which reframes the solution. You do not open the market by lowering the standards on the institutional instrument. You open it by building an instrument whose economics are the same and whose overhead is not there.</p><h2>The pattern from other markets</h2><p>This has happened before, and it never happened by relaxing the rules.</p><p>Publishing used to require institutional permission. Now a writer can publish directly. Video distribution used to require television infrastructure. Now creators reach audiences from a phone.</p><p>The financial version is the clearest. High-priced stocks once required enough cash for a whole share. FINRA explains that fractional shares allow investors to buy less than one full share, though access and rules vary by brokerage firm.<sup><a href="#src-18">18</a></sup> Nobody weakened equity market regulation to achieve that. Someone changed the unit. The exposure stayed identical; the minimum size collapsed; the population that could hold it expanded.</p><p>Treasury access changed the same way. TreasuryDirect gives individuals a direct route to many Treasury securities at a $100 minimum.<sup><a href="#src-17">17</a></sup></p><p>The pattern is consistent. A market begins expensive, opaque and institution-first. Then better units, better interfaces and clearer rules make safer participation possible. The risk does not vanish. It becomes legible and correctly sized.</p><p>That is what should happen in rates.</p><p>Not maximum leverage. Not casino applications. Not pretending everyone should be trading swaps.</p><p>The goal is small, transparent, defined-risk instruments that let people manage rate exposures already present in their lives.</p><h2>What Continua is actually building</h2><p class="pull">We are starting with the unit, not the interface.</p><p>A yield strip is a tradable claim on the yield of one defined future period. Take an asset that pays a floating rate. Separate the yield due in the first quarter from the yield due in the second, the third and the fourth, and from the principal itself. Each of those becomes its own instrument with its own market and its own price.</p><p>That single change does most of the work.</p><p>It removes the counterparty. A strip is bought and sold outright. The exchange completes at the point of sale rather than performing over three years, so there is no ongoing obligation to document, margin or default on. The master agreement, the credit line and the collateral schedule are not simplified. They are unnecessary.</p><p>It caps the loss. A buyer of a strip can lose what they paid for it and no more. There is no margin call, no forced liquidation and no mechanism by which a position becomes a liability. That is a structural property of the instrument, not a policy we apply on top of it.</p><p>It sets its own minimum size. A strip covering one quarter of the yield on a small holding is a small instrument. There is no fixed overhead to amortize, so there is no floor beneath which the trade stops making sense.</p><p>It publishes a curve. Because each period trades separately, each period has a price. Read them together and you have a forward curve produced by actual trading. Today an onchain yield-bearing asset publishes exactly one number: the rate it happens to be paying at this moment. A curve is the difference between knowing today’s rate and being able to see, and act on, the market’s view of every period ahead.</p><p>None of that requires anyone to become a macro trader. It requires the exposure to exist in a form a normal balance sheet can hold.</p><h2>Who uses it first</h2><p>The first users will not be households, and we should say that plainly rather than let a democratization argument imply otherwise.</p><p>The largest unhedged rate positions onchain today are held by a small number of sizeable holders: treasuries, funds, protocols and desks sitting on tokenized bills and yield-bearing dollar instruments, all of them floating, none of them hedgeable. Those holders have the clearest need, the most capital and the least patience for the fact that no onchain venue can currently fix a rate for them.</p><p>The instrument is the same at both ends of the market. That is the point of building it as a unit rather than as a product. A desk hedging eight figures of tokenized treasury yield and a saver who wants to know what their next quarter of income is worth are holding the same claim in different sizes. The unit scales down without being redesigned, which is precisely what fractional shares demonstrated and what the swap, by construction, cannot do.</p><p>So the sequence is: build the instrument for the holders who need it most, let the curve those trades produce become public information, and let the size come down on its own.</p><h2>What “open the market” should not mean</h2><p>Opening the rate market should not mean removing every gate.</p><p>Some gates exist for good reasons. Leverage can wipe out accounts. Margin calls can force selling at the worst possible moment. Bespoke OTC contracts can be hard to value and harder to exit. Any product that hands an unprepared user an unlimited-loss position is a bad product regardless of how open it claims to be.</p><p>Our answer to that is architectural rather than promotional. The instrument has no leverage in it. The maximum loss is the purchase price. The price of every period is public and formed by trading rather than quoted privately. There is no position that can turn into a debt.</p><p>Those are properties we can point at, not commitments we are asking to be trusted on. That distinction matters, and readers should hold every protocol to it, including this one.</p><p>Regulation has already pushed the institutional market in the same direction. The CFTC says swap execution facilities were created under Dodd-Frank to promote swaps trading on SEFs and pre-trade price transparency.<sup><a href="#src-15">15</a></sup> Real-time public reporting rules define public dissemination as making swap transaction and pricing data freely available and readily accessible to the public in a non-discriminatory way.<sup><a href="#src-16">16</a></sup></p><p>Transparency is progress. But seeing the machine is not the same as having a safe door into it.</p><p class="pull">Democratize the exposure, not the danger.</p><h2>How to keep your footing</h2><p>The safest way to approach this market is to translate every technical sentence back into a simple question. Who is borrowing? Who is lending? What rate is being used? What asset is being referenced? What happens if the rate moves the wrong way? Who has to find cash, and who can wait?</p><p>Those questions are basic and they are powerful. Professionals use more complicated models, but they are still answering versions of the same questions. The danger for a newcomer is not ignorance, which can be fixed. The danger is mistaking fluency in jargon for understanding.</p><p>When a product sounds impressive, slow it down. If it is a swap, ask what payments are being exchanged. If it is repo, ask what collateral is posted. If it is a curve trade, ask which maturities are being compared. If it is carry, ask what risk is being held to earn that income. If it is a hedge, ask what risk remains after the hedge is placed.</p><p>Ask them about a yield strip too. What asset does it reference? Which period? What is the most I can lose? Those have short, checkable answers, and an instrument that cannot give short, checkable answers to those questions is not one you should be holding.</p><h2>The position</h2><p>The rate market should be readable and it should be reachable, and the second does not follow automatically from the first.</p><p>Making it readable is what this series is for. Making it reachable requires changing the unit, because the reason most people cannot hedge a rate is not that the knowledge is withheld. It is that the only instrument on offer carries an overhead built for a different kind of participant.</p><p>A tradable claim on one period of yield is a smaller unit. It removes the counterparty, caps the loss, sets no minimum and produces a public curve as a side effect of being traded.</p><p>The goal is not to turn everyone into a macro trader. It is to stop treating the price of money as a private language, and to make the exposure available in a size and a shape that a normal balance sheet can actually hold.</p><p class="pull">A market that shapes ordinary life should be reachable by ordinary participants.</p><h2>Glossary in plain English</h2><dl class="gloss"><div><dt>Basis</dt><dd>The gap between two related market prices or rates.</dd></div><div><dt>Benchmark</dt><dd>A reference rate used to calculate payments.</dd></div><div><dt>Collateral</dt><dd>An asset pledged to protect a lender or counterparty.</dd></div><div><dt>Duration</dt><dd>Sensitivity to interest-rate movements.</dd></div><div><dt>Forward curve</dt><dd>The set of prices for future periods, read together as a shape rather than a single rate.</dd></div><div><dt>Liquidity</dt><dd>The ability to buy or sell without badly moving the price.</dd></div><div><dt>Notional</dt><dd>A reference amount used to calculate derivative payments. It is a measuring stick, not normally the amount exchanged.</dd></div><div><dt>Rate exposure</dt><dd>The way a person, company or portfolio is affected when interest rates move.</dd></div><div><dt>Spread</dt><dd>Extra yield or rate above a benchmark.</dd></div><div><dt>Yield strip</dt><dd>A tradable claim on the yield of one defined future period, separated from the principal claim and from the other periods.</dd></div></dl>
+    <section class="sources"><span class="mono">Sources</span><ol><li id="src-2"><span class="mono">[2]</span> <a href="https://data.bis.org/topics/OTC_DER" target="_blank" rel="noopener noreferrer">data.bis.org/topics/OTC_DER</a></li><li id="src-15"><span class="mono">[15]</span> <a href="https://www.cftc.gov/IndustryOversight/TradingOrganizations/SEF2/index.htm" target="_blank" rel="noopener noreferrer">www.cftc.gov/IndustryOversight/TradingOrganizations/SEF2/index.htm</a></li><li id="src-16"><span class="mono">[16]</span> <a href="https://www.ecfr.gov/current/title-17/chapter-I/part-43" target="_blank" rel="noopener noreferrer">www.ecfr.gov/current/title-17/chapter-I/part-43</a></li><li id="src-17"><span class="mono">[17]</span> <a href="https://treasurydirect.gov/help-center/faqs/marketable-faqs" target="_blank" rel="noopener noreferrer">treasurydirect.gov/help-center/faqs/marketable-faqs</a></li><li id="src-18"><span class="mono">[18]</span> <a href="https://www.finra.org/investors/insights/investing-fractional-shares" target="_blank" rel="noopener noreferrer">www.finra.org/investors/insights/investing-fractional-shares</a></li></ol></section>
+  </article>
+  <footer class="foot">
+    <a href="index.html#writing">← All notes and code</a>
+    <a href="note17">Note 17 · The $669.5 trillion rate market must come onchain →</a>
+    <a href="index.html#join">Join the waitlist →</a>
+  </footer>
+</div>
+</body>
+</html>

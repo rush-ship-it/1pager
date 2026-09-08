@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The $669.5 Trillion Rate Market Must Come Onchain — Continua</title>
+<meta name="description" content="SOFR, yield curves, forward rates, carry and swaps already form a programmable system. The missing piece is a shared financial rail that can make the system work as one.">
+<meta name="theme-color" content="#F2F0E9">
+<meta property="og:title" content="The $669.5 Trillion Rate Market Must Come Onchain">
+<meta property="og:description" content="SOFR, yield curves, forward rates, carry and swaps already form a programmable system. The missing piece is a shared financial rail that can make the system work as one.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Continua Finance">
+<meta property="og:url" content="https://continua.finance/note17">
+<meta property="og:image" content="https://continua.finance/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://continua.finance/og.png">
+<link rel="canonical" href="https://continua.finance/note17">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bone:#F2F0E9;--ink:#100E0A;--blue:#0B82CB;--red:#DB3829;--yellow:#EEAD2B;--bg:#F2F0E9;--fg:#100E0A;
+    --line:color-mix(in srgb,var(--fg) 14%,transparent);--line2:color-mix(in srgb,var(--fg) 32%,transparent);
+    --muted:color-mix(in srgb,var(--fg) 62%,transparent);--pad:clamp(20px,3.4vw,52px);--ease:cubic-bezier(.16,1,.3,1)}
+  :root[data-theme="dark"]{--bg:#100E0A;--fg:#F2F0E9}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:var(--bg)}
+  body{background:var(--bg);color:var(--fg);font-family:'Lexend',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  img,svg{max-width:100%;display:block}
+  .mono{font-family:'Martian Mono',monospace;text-transform:uppercase;letter-spacing:.18em;font-size:clamp(8.5px,.7vw,10.5px);line-height:1.5}
+  .wrap{width:min(1100px,calc(100% - var(--pad)*2));margin:0 auto}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .brand img{width:28px;height:28px}
+  .brand span{font-weight:600;letter-spacing:-.04em;font-size:18px}
+  .top a.back{text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:300;display:inline-flex;gap:8px;align-items:center}
+  .top a.back:hover{color:var(--fg)}
+
+  /* the post template: mark top-left, orbit lines right, title bottom-left */
+  .head{position:relative;overflow:hidden;border:1px solid var(--line2);border-radius:clamp(22px,2.6vw,34px);
+    min-height:min(520px,62vh);display:grid;align-content:end;padding:clamp(24px,3.4vw,48px);isolation:isolate}
+  .head .illo{position:absolute;right:-6%;top:-10%;width:58%;height:78%;z-index:0}
+  .head .illo ellipse{fill:none;stroke-width:2.2;stroke:currentColor}
+  .head .illo .k-r{color:var(--red)}.head .illo .k-b{color:var(--blue)}.head .illo .k-y{color:var(--yellow)}.head .illo .k-k{color:var(--fg)}
+  .head .illo .dash{stroke-dasharray:10 8}
+  .head .illo .dot{stroke-dasharray:0 7;stroke-linecap:round;stroke-width:2.6}
+  .head .illo .nodes circle{fill:var(--fg)}
+  .head .kicker{position:relative;z-index:1;color:var(--muted);margin-bottom:auto;display:flex;gap:18px;flex-wrap:wrap;align-self:start}
+  .head h1{position:relative;z-index:1;font-size:clamp(32px,4.8vw,66px);line-height:.98;letter-spacing:-.03em;font-weight:600;max-width:16ch;
+    margin-top:clamp(120px,22vh,220px)}
+  .head .sub{position:relative;z-index:1;margin-top:16px;font-weight:300;color:var(--muted);font-size:clamp(15px,1.5vw,20px);line-height:1.45;max-width:52ch}
+  .head .meta{position:relative;z-index:1;margin-top:22px;display:flex;gap:18px;flex-wrap:wrap;color:var(--muted)}
+  .head .meta span:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);margin-right:8px;vertical-align:1px}
+  .head .meta span:nth-child(2):before{background:var(--blue)}.head .meta span:nth-child(3):before{background:var(--red)}
+
+  .note{margin:clamp(22px,3vw,36px) auto 0;max-width:720px;border:1px solid var(--line2);border-radius:16px;padding:14px 18px;
+    display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;color:var(--muted);font-size:14px;font-weight:300;line-height:1.5}
+  .note svg{width:26px;height:26px;overflow:visible}
+  article{max-width:720px;margin:clamp(28px,4vw,56px) auto 0}
+  article p{font-weight:300;font-size:clamp(16.5px,1.35vw,19px);line-height:1.62;margin:0 0 1.15em;letter-spacing:-.005em}
+  article p:first-of-type::first-letter{font-weight:600;font-size:1.6em;line-height:1;padding-right:2px}
+  article h2{font-size:clamp(24px,2.6vw,36px);letter-spacing:-.03em;font-weight:600;line-height:1.05;margin:clamp(36px,4.5vw,56px) 0 16px;
+    display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+  article h2:before{content:"";width:22px;height:22px;border-radius:50%;border:2px solid var(--fg);display:block}
+  article h2:nth-of-type(2n):before{border-color:var(--yellow);border-style:dashed}
+  article h2:nth-of-type(3n):before{border-color:var(--blue);border-style:dotted;border-width:2.6px}
+  article h2:nth-of-type(4n):before{border-color:var(--red)}
+  .pull{font-weight:500!important;font-size:clamp(22px,2.4vw,32px)!important;line-height:1.2!important;letter-spacing:-.025em;
+    border-left:3px solid var(--yellow);padding:6px 0 6px 22px;margin:1.6em 0!important}
+  sup{font-size:.62em;line-height:0;vertical-align:.5em}
+  sup a{text-decoration:none;color:var(--blue);font-family:'Martian Mono',monospace;padding:0 2px}
+  .check{list-style:none;counter-reset:q;margin:0 0 1.4em;border-top:1px solid var(--line)}
+  .check li{counter-increment:q;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-weight:400;font-size:clamp(16px,1.3vw,18px)}
+  .check li:before{content:counter(q,decimal-leading-zero);font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--red)}
+  .gloss{display:grid;gap:0;border-top:1px solid var(--line);margin-bottom:1.4em}
+  .gloss div{display:grid;grid-template-columns:minmax(120px,.35fr) 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .gloss dt{font-weight:500;letter-spacing:-.01em}
+  .gloss dd{font-weight:300;color:var(--muted);line-height:1.5}
+  .sources{margin-top:clamp(36px,4.5vw,56px);border-top:1px solid var(--line2);padding-top:18px}
+  .sources ol{list-style:none;display:grid;gap:8px;margin-top:12px}
+  .sources li{font-size:13.5px;font-weight:300;color:var(--muted);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .sources li a{color:var(--fg);text-decoration:none;border-bottom:1px solid var(--line2);word-break:break-all}
+  .sources li a.back{border:0;color:var(--muted)}
+  .foot{margin:clamp(40px,6vw,80px) auto 40px;max-width:720px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line2);padding-top:22px;color:var(--muted)}
+  .foot a{text-decoration:none;font-weight:400;color:var(--fg);display:inline-flex;gap:8px;align-items:center}
+  .foot a:hover{text-decoration:underline}
+  @media(max-width:760px){.head .illo{width:100%;right:-14%;top:-12%;height:48%}.head h1{margin-top:clamp(140px,30vh,220px)}.gloss div{grid-template-columns:1fr;gap:4px}}
+
+  /* note 17 additions: numbers in the brand's own stroke language */
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 1.6em}
+  .tile{border:1px solid var(--line2);border-radius:14px;padding:14px 14px 12px;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+  .tile svg{width:24px;height:24px;overflow:visible;margin-bottom:10px}
+  .tile b{display:block;font-weight:500;letter-spacing:-.03em;font-size:clamp(22px,2.2vw,30px);line-height:1;font-variant-numeric:tabular-nums}
+  .tile span{display:block;margin-top:6px;color:var(--muted);font-weight:300;font-size:12.5px;line-height:1.4}
+  .fig{border:1px solid var(--line2);border-radius:16px;padding:16px 18px 12px;margin:0 0 1.6em;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+  .fig svg{width:100%;height:auto;display:block;overflow:visible}
+  .fig .cap{margin:8px 0 0;color:var(--muted);font-size:12.5px;font-weight:300;line-height:1.45}
+  .fig text{font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:.08em;fill:var(--fg)}
+  .fig text.dim{fill:var(--muted)}
+  .fig .k-y{fill:var(--yellow)}.fig .k-b{fill:var(--blue)}.fig .k-r{fill:var(--red)}.fig .k-k{fill:var(--fg)}
+  .fig .lead{stroke:var(--line2);stroke-width:1.6;stroke-dasharray:0 6;stroke-linecap:round;fill:none}
+  .defs{border-top:1px solid var(--line);margin:0 0 1.5em}
+  .defs div{display:grid;grid-template-columns:minmax(110px,.3fr) 1fr;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .defs dt{font-weight:500;letter-spacing:-.01em}
+  .defs dd{font-weight:300;color:var(--muted);line-height:1.5;font-size:15.5px}
+  .five{list-style:none;counter-reset:f;margin:0 0 1.5em;display:grid;gap:8px}
+  .five li{counter-increment:f;display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start;padding:12px 14px;border:1px solid var(--line2);border-radius:12px;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+  .five li:before{content:counter(f);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);font-family:'Martian Mono',monospace;font-size:11px}
+  .five li b,.five li span{grid-column:2}
+  .five li b{display:block;font-weight:500;letter-spacing:-.01em;margin-bottom:-4px}
+  .five li span{font-weight:300;color:var(--muted);font-size:15px;line-height:1.5}
+  .obj{border-top:1px solid var(--line);margin:0 0 1.5em}
+  .obj div{display:grid;grid-template-columns:minmax(150px,.38fr) 1fr;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .obj dt{font-weight:500;letter-spacing:-.01em}
+  .obj dt:before{content:"“"}.obj dt:after{content:"”"}
+  .obj dd{font-weight:300;color:var(--muted);line-height:1.5;font-size:15px}
+  .close{margin-top:1.2em;padding:18px 20px;border-radius:16px;background:var(--fg);color:var(--bg)}
+  .close p{color:inherit!important;margin:0 0 .5em!important;font-size:clamp(17px,1.5vw,21px)!important;font-weight:400!important;line-height:1.35!important}
+  .close p:last-child{margin:0!important;font-weight:500!important}
+  .fig .cap::first-letter{font-size:inherit;font-weight:inherit;padding:0;line-height:inherit}
+  @media(max-width:760px){.tiles{grid-template-columns:1fr 1fr}.defs div,.obj div{grid-template-columns:1fr;gap:4px}}
+</style>
+<script>try{var _t=localStorage.getItem('continua-theme');if(_t)document.documentElement.dataset.theme=_t;}catch(e){}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="index.html"><img src="assets/mark.svg" alt=""><span>Continua</span></a>
+    <a class="back" href="index.html#gap">← Back to the site</a>
+  </div>
+  <header class="head">
+    <svg class="illo" viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <ellipse cx="420" cy="150" rx="150" ry="150" class="k-r"/>
+  <ellipse cx="300" cy="300" rx="210" ry="120" class="k-y" transform="rotate(-22 300 300)"/>
+  <ellipse cx="500" cy="330" rx="120" ry="210" class="k-b dash" transform="rotate(30 500 330)"/>
+  <ellipse cx="180" cy="120" rx="170" ry="70" class="k-k dot" transform="rotate(14 180 120)"/>
+  <ellipse cx="360" cy="240" rx="250" ry="90" class="k-r dot" transform="rotate(-8 360 240)"/>
+  <ellipse cx="120" cy="360" rx="90" ry="140" class="k-b" transform="rotate(-30 120 360)"/>
+  <g class="nodes"><circle cx="296" cy="164" r="5"/><circle cx="452" cy="296" r="5"/><circle cx="171" cy="257" r="5"/><circle cx="521" cy="118" r="5"/></g>
+</svg>
+    <div class="kicker mono"><span>Note 17</span><span>Market structure</span><span>Summary · revised</span></div>
+    <h1>The $669.5 Trillion Rate Market Must Come Onchain</h1>
+    <p class="sub">SOFR, yield curves, forward rates, carry and swaps already form a programmable system. The missing piece is a shared financial rail that can make the system work as one.</p>
+    <div class="meta mono"><span>13 min read · summary</span><span>Continua Finance</span><span>2026</span></div>
+  </header>
+  <aside class="note" role="note">
+    <svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="0 5" stroke-linecap="round"/><circle cx="13" cy="13" r="3" fill="currentColor"/></svg>
+    <div>Editorial note: this is an educational thesis about financial market structure, not personal investment advice. It is a condensed reading of Article 17 (revised). The figures are the article&#x27;s own; the sources are listed at the end.</div>
+  </aside>
+  <article>
+    
+<p>The rate market is where the world decides what time is worth. It sets the rent paid on cash, the cost of a mortgage, the hurdle rate for a new factory, the value of a pension promise and the price at which a government borrows for thirty years. Most people meet it only through its consequences. Behind those consequences is an extraordinary machine: government bonds, repo funding, SOFR, yield curves, forward rates, futures, swaps, collateral, margin, clearing and settlement.</p>
+<p>At the end of 2025, global over-the-counter interest-rate derivatives had $669.5 trillion of notional outstanding, $545.0 trillion of it in swaps.<sup><a href="#src-1">1</a></sup> Notional is a measuring stick, not money about to change hands. The more revealing figure is flow: roughly $7.9 trillion of OTC interest-rate derivatives turn over on an average day.<sup><a href="#src-20">20</a></sup> Together they say how much of modern finance is organised around promises whose value moves with rates, and how relentlessly those promises have to be observed, calculated, netted and settled.</p>
+<p class="pull">The rate market will move onchain because it is already a programmable market trapped inside fragmented infrastructure.</p>
+<p>A rate contract is a set of rules applied to time: observe a benchmark, calculate an amount, check a date, exchange a payment, revalue, test the collateral, call margin if required, keep the audit trail, repeat. Legal judgment, credit analysis and crisis management cannot be replaced by code. The routine heart of the market can be coordinated by a shared programmable ledger. Putting a bond token on a ledger is not enough on its own. A bond needs money for settlement, repo for financing, collateral rules, a curve for valuation and derivatives for hedging. The real transition begins when asset, money, yield, forward curve, hedge and collateral interact on the same rail.</p>
+
+<h2>The number, used honestly</h2>
+<div class="tiles">
+  <div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#EEAD2B"/></svg><b>$669.5T</b><span>interest-rate derivatives notional, 79.3% of all OTC derivatives<sup><a href="#src-1">1</a></sup></span></div>
+  <div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="7" ry="11" fill="#0B82CB" transform="rotate(24 12 12)"/></svg><b>$545.0T</b><span>of it in interest-rate swaps; $71.5T in FRAs, $52.9T in options</span></div>
+  <div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="4" ry="11" fill="#DB3829" transform="rotate(-10 12 12)"/></svg><b>$7.9T</b><span>changes hands on an average day<sup><a href="#src-20">20</a></sup></span></div>
+  <div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="11" ry="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="0 6" stroke-linecap="round"/></svg><b>$16B</b><span>in tokenised funds holding short-dated government paper, across 80+ products, all floating, none hedgeable<sup><a href="#src-21">21</a></sup></span></div>
+</div>
+<div class="fig" aria-label="Notional shrinks to gross market value and then to net credit exposure">
+  <svg viewBox="0 0 700 150">
+    <line class="lead" x1="70" y1="75" x2="640" y2="75"/>
+    <circle class="k-y" cx="90" cy="75" r="52"/>
+    <circle class="k-b" cx="340" cy="75" r="22"/>
+    <circle class="k-r" cx="560" cy="75" r="9"/>
+    <text x="90" y="142" text-anchor="middle">$669.5T · NOTIONAL</text>
+    <text x="340" y="142" text-anchor="middle">$16.3T · GROSS MARKET VALUE</text>
+    <text x="560" y="142" text-anchor="middle">$3.4T · NET EXPOSURE</text>
+    <text class="dim" x="215" y="52" text-anchor="middle">VALUED</text>
+    <text class="dim" x="450" y="52" text-anchor="middle">NETTED · −85.3%</text>
+  </svg>
+  <p class="cap">Notional is not the loss number. Gross market value across interest-rate derivatives was $16.3 trillion; gross credit exposure after enforceable netting, before collateral, was $3.4 trillion across all OTC derivatives. Close-out netting cut mark-to-market exposure by 85.3%.<sup><a href="#src-1">1</a></sup></p>
+</div>
+<div class="fig" aria-label="Maturity split of the notional">
+  <svg viewBox="0 0 700 110">
+    <ellipse class="k-y" cx="150" cy="40" rx="150" ry="30"/>
+    <ellipse class="k-b" cx="420" cy="40" rx="118" ry="30"/>
+    <ellipse class="k-r" cx="622" cy="40" rx="76" ry="30"/>
+    <text x="150" y="98" text-anchor="middle">$290.0T · ≤ 1 YEAR</text>
+    <text x="420" y="98" text-anchor="middle">$231.1T · 1–5 YEARS</text>
+    <text x="622" y="98" text-anchor="middle">$148.2T · > 5 YEARS</text>
+  </svg>
+  <p class="cap">Remaining maturity of the $669.5 trillion.<sup><a href="#src-1">1</a></sup> Most of it is short-dated: a market of constant resets, settlements and renewals.</p>
+</div>
+<p>The CFTC has shown why raw notional is a poor measure of risk transfer: $231 trillion of swap notional became $13.9 trillion of Entity-Netted Notional once rate sensitivity was normalised and positions netted, and 92% of swap users were exclusively long or exclusively short, directional end users rather than intermediaries.<sup><a href="#src-10">10</a></sup> That is why rate markets are properly sized by turnover rather than by outstanding notional. Every one of the trades in that $7.9 trillion a day has to be confirmed, valued, collateralised, netted, reported and settled by several institutions, each keeping its own record. The size of the opportunity is not the notional. It is the daily volume of coordination the notional implies.</p>
+
+<h2>First, understand the machine</h2>
+<dl class="defs">
+  <div><dt>SOFR</dt><dd>The Secured Overnight Financing Rate: a broad measure of the cost of borrowing cash overnight against US Treasuries, calculated by the New York Fed from transaction-level repo data.<sup><a href="#src-3">3</a></sup> The transactions beneath it grew from about $1 trillion a day in early 2022 to about $3 trillion a day by September 2026.<sup><a href="#src-9">9</a></sup></dd></div>
+  <div><dt>Repo</dt><dd>Economically a secured loan: cash against securities, reversed later. It connects cash to securities and keeps dealer inventories and market-making funded.</dd></div>
+  <div><dt>Yield curve</dt><dd>How rates vary by maturity for a given set of instruments. The overnight point answers one question; the two, five and ten-year points answer others.</dd></div>
+  <div><dt>Forward rate</dt><dd>The break-even rate implied today for a future period. If the one-year zero rate is 4.00% and the two-year is 4.50%, the one-year rate starting a year from now is about 5.00%. Not a prophecy; a consistency condition.</dd></div>
+  <div><dt>Carry and roll-down</dt><dd>Carry is the income or cost of holding a position before the curve moves. Roll-down is the value change from ageing into a shorter maturity on an unchanged curve. Neither is free money.</dd></div>
+  <div><dt>Swap</dt><dd>One side pays fixed and receives floating; the other does the reverse. On $100 million at 4.25% fixed against a 3.75% floating leg, the net is $500,000 for a simplified year, before day-count, compounding and netting conventions.</dd></div>
+</dl>
+<p>The market is not complicated because bankers enjoy complication. A promise extending through time needs precision: identities, legal terms, calendars, rate observations, day-counts, valuation models, collateral terms, netting rules, settlement instructions and reporting.</p>
+
+<h2>Who uses it, and what the present system gets right</h2>
+<p>A swap is rarely a bet. It is a way to reshape a risk that already exists: a manufacturer fixing floating-rate debt, a bank managing the mismatch between mortgages and deposits, a pension adding duration to match decades of promises, an insurer lining assets up with distant claims, a corporation locking a financing window, a hedge fund trading a basis or the shape of the curve. Around them stand dealers, clearing members, central counterparties, custodians, settlement systems, benchmark administrators, data vendors, trade repositories, lawyers and operations teams. The complete rate trade is not a line between two traders. It is a chain of institutions coordinating one economic promise.</p>
+<p>That system works. Standard documentation supports close-out netting. Clearing replaces bilateral exposures with a central counterparty. Compression removes redundant trades. At year-end 2025, 78.8% of reported interest-rate notional was recorded against central counterparties, an estimated minimum clearing rate of 64.9%.<sup><a href="#src-1">1</a></sup> Clearing, compression and electronic trading have already made OTC rate markets behave more like exchanges.<sup><a href="#src-12">12</a></sup> Onchain finance is the next structural step, not a repudiation of the last one.</p>
+
+<h2>The hidden tax</h2>
+<p>A trade can be executed electronically and still enter a fragmented lifecycle. The dealer, the client, the clearing member, the central counterparty and every risk, finance, collateral, settlement and reporting system keep their own representation, then exchange messages and reconcile. The industry's own Common Domain Model exists to reduce reconciliation caused by firms recording the same events differently.<sup><a href="#src-6">6</a></sup><sup><a href="#src-13">13</a></sup> Collateral adds its own coordination problem: valuation, exposure, eligibility, haircuts, timing, custody and substitution.<sup><a href="#src-7">7</a></sup> Even timing has a price: a lower headline funding rate can become unattractive once operational overhead, netting treatment and balance-sheet cost are counted.<sup><a href="#src-8">8</a></sup></p>
+<p class="pull">The true cost of finance is not just the quoted rate. It is the cost of making a transaction legally valid, operationally synchronised, adequately collateralised, correctly reported and finally settled.</p>
+
+<h2>Five reasons rates suit a shared rail</h2>
+<ol class="five">
+  <li><b>The contracts are conditional.</b><span>Take a notional, observe a benchmark, apply the accrual and day-count, net, pay. ISDA calls interest calculations a compelling case for automation.<sup><a href="#src-18">18</a></sup></span></li>
+  <li><b>Time is part of the product.</b><span>Reset dates, observation windows, payment dates and calendars are the instrument. A shared event sequence with agreed timestamps is a natural fit.</span></li>
+  <li><b>Collateral is not peripheral.</b><span>$423.5 billion of initial margin sat at major CCPs for cleared rate and credit derivatives; leading firms collected $1.6 trillion for non-cleared trades.<sup><a href="#src-1">1</a></sup> A joint New York Fed and BIS prototype has already tested smart-contract collateral that values baskets, applies haircuts and triggers calls.<sup><a href="#src-19">19</a></sup></span></li>
+  <li><b>The market already wants a common language.</b><span>Onchain execution without shared definitions would automate disagreement. A common model plus a shared rail means an event is generated once and consumed by everyone authorised.</span></li>
+  <li><b>Rates connect money, securities and risk.</b><span>Bonds, repo, SOFR, curves, forwards and swaps are different views of one structure. A tokenised bond that cannot be financed, pledged, hedged or settled onchain stays tied to old rails by invisible strings.</span></li>
+</ol>
+
+<h2>Two examples</h2>
+<p><strong>Fixing a future borrowing cost.</strong> A mid-sized company wants to pay fixed and receive compounded SOFR on $50 million for three years. Today that means a dealer, onboarding, documentation, credit approval, confirmation, collateral terms, clearing access, valuations and reporting. On a governed rail the same relationship runs through verified identities, an approved SOFR feed with fallbacks, executable quotes, legal prose that the code points to, collateral verified before the trade goes live, automatic lifecycle calculation, atomic or netted settlement and reports produced from the same events. The economic risk remains. The coordination tax shrinks.</p>
+<p><strong>Turning the yield curve into usable periods.</strong> Take an income-bearing asset whose cash flows accrue over twelve months. The claim on each future period can be separated from the principal, issued as its own instrument and bought or sold outright. Each one is a yield strip. This is not novel: the US Treasury has permitted exactly this separation since 1985 under the STRIPS program. Once the pieces trade, three things follow that do not exist onchain today. A holder can execute at a forward rate rather than merely observe one. A price appears for each future window, so the shape of those prices is a forward curve produced by trading rather than by model. And a floating holder can fix a rate without a dealer: selling the strips covering the next year converts uncertain floating income into a known amount today, while the principal never moves.</p>
+<p class="pull">A strip sale is not a swap. That is the point, not a caveat.</p>
+<p>A swap is a bilateral contract with two payment legs, a notional, reset conventions, collateral terms and a counterparty or clearing arrangement. A strip sale has none of those and needs none of them: the exchange completes at the point of sale rather than performing over three years, so there is no ongoing counterparty to document, margin or default. The institutional swap keeps its advantages, bespoke terms, very large size, multi-decade maturities and portfolio netting. The strip takes the cases the swap market was never going to serve. The breakthrough is not a higher advertised yield. It is a standard way to trade defined future cash-flow periods, with clear rights, transparent pricing and settlement that completes at execution.</p>
+
+<h2>Two rails, not one</h2>
+<p>Most serious work on this transition, including the prototypes cited here, describes a permissioned institutional rail: verified identities, role-based access, clearing members, custodian attestation, standardised product definitions and tokenised central bank money. That work is correct and it matters. It is also a decade-scale program involving central banks, clearing houses, dealers and legislators, and it will arrive when those parties are ready.</p>
+<p>There is a second rail, and it is already running. Tens of billions of dollars of yield-bearing assets exist onchain today: tokenised treasuries, liquid staking claims and yield-bearing dollar instruments. All pay a rate, all pay a floating one, and none can currently be hedged, fixed or sold forward by the people holding them. Those holders are not waiting for an ISDA master agreement. They are holding an unhedged rate position right now, in an environment where settlement, custody and composability are already solved.</p>
+<p>The two rails need different instruments. The institutional rail needs the swap reproduced faithfully, with its documentation, clearing and netting intact. The open rail needs an instrument that carries the same economics with none of the bilateral machinery, because there is no dealer to face and no master agreement to sign. The yield strip is that instrument. These are the same market approached from two ends, and the conventions set at the open end, what a period claim is, how a forward curve is published, how a strip settles, are the conventions the institutional rail will eventually have to interoperate with. Standards are usually set by whoever ships first.</p>
+<p class="pull">Continua Finance is building the open rail: yield strips, an auto-rolling market to trade them, and a forward curve published continuously from those trades.</p>
+
+<h2>What has to be true first</h2>
+<ol class="check">
+  <li>Settlement money that can coordinate with the assets, so delivery-versus-payment is legally effective and operationally conditional.</li>
+  <li>Legal agreements that connect prose and code, with an agreed hierarchy when they conflict.</li>
+  <li>Institution-grade data: authenticated rates, calendars, curves and eligibility, with versioning and fallbacks.</li>
+  <li>Privacy and identity built in from the start: verifiable rules and aggregate risk, not every pension's hedge broadcast to the world.</li>
+  <li>Netting and clearing that survive the transition, rather than every trade forced into isolated gross settlement.</li>
+  <li>Collateral that is legally and operationally usable: who controls it, whether it is encumbered, what happens in insolvency.</li>
+  <li>Safer product forms for broader access: smaller sizes, visible leverage, clear maximum loss, plain-English risk.</li>
+</ol>
+<p class="pull">Democratize the exposure, not the danger.</p>
+
+<h2>The objections, answered honestly</h2>
+<dl class="obj">
+  <div><dt>Code can fail</dt><dd>Correct. So: audited code, formal specifications, limits, staged deployment, monitoring, emergency controls, and discretion kept in written contracts where it belongs.<sup><a href="#src-18">18</a></sup></dd></div>
+  <div><dt>A contract cannot know SOFR by itself</dt><dd>Correct. Governed data sources, redundancy, fallbacks, dispute rules and the ability to halt automation safely.</dd></div>
+  <div><dt>Legal rights do not follow a token</dt><dd>Correct. Governing law, recognised records, control rules, close-out netting and collateral perfection matter more than cosmetic issuance.</dd></div>
+  <div><dt>Faster settlement can reduce netting</dt><dd>Correct. The goal is programmable settlement: net, compress or queue under agreed rules, then settle atomically at the right point.</dd></div>
+  <div><dt>Continuous markets transmit stress faster</dt><dd>Correct.<sup><a href="#src-17">17</a></sup> That argues for circuit breakers, collateral rules and leverage limits, not for preserving fragmentation.</dd></div>
+  <div><dt>Liquidity will fragment across platforms</dt><dd>Correct, unless standards and interoperability are designed in. The destination is an interoperable rate market, not token islands.</dd></div>
+  <div><dt>A shared ledger is one more system to reconcile</dt><dd>Correct, unless participants treat agreed lifecycle events as authoritative and connect them to enforceable rights.</dd></div>
+</dl>
+
+<h2>Why it will happen</h2>
+<p>The direction of travel follows the economics. Every reform of the last two decades, electronic execution, central clearing, standardised data, automated reporting, reduced the value of fragmented processing and raised the value of shared standards. Government exposure is appearing in programmable form through two channels. Direct tokenised government-bond issuance is still very small, about $8 billion, though the BIS identifies government securities as a natural foundation because they serve as benchmarks, savings instruments and collateral.<sup><a href="#src-16">16</a></sup> The larger channel is indirect and has grown faster: tokenised funds holding short-dated government paper now represent roughly $16 billion across more than eighty products, already used onchain as collateral and cash management.<sup><a href="#src-21">21</a></sup> Every one of those products pays a floating rate. Not one lets its holder fix that rate, hedge it, or sell a defined future period of it. The asset arrived. The market around it did not.</p>
+<p>The BIS 2025 blueprint places tokenised reserves, bank money and government bonds at the core of a next-generation system.<sup><a href="#src-4">4</a></sup> Project Pine showed core monetary and collateral functions represented coherently on programmable rails.<sup><a href="#src-19">19</a></sup> And the components reinforce each other: a tokenised bond plus settlement money gives atomic delivery-versus-payment; add repo and the bond becomes fundable collateral; add curves and future cash flows can be valued; add swaps and defined rate risk can be transferred. This is a network transition. Each completed layer raises the value of the next.</p>
+
+<h2>The finishing argument</h2>
+<p>The $669.5 trillion figure should not be used as fear. It should be used as a design brief. It describes a market so large that small inefficiencies compound into major costs, so interconnected that timing failures become liquidity problems, and so rule-based that much of its routine lifecycle can be automated. Its users need legal certainty, netting, clearing and trusted institutions. They do not need endless copies of the same truth.</p>
+<p>That layer starts with the smallest honest unit of it. Not a reproduction of the institutional swap, which needs institutions to work, but the piece underneath it: a tradable claim on the yield of one defined period. Issue those, let them trade, and a forward curve appears where there was previously a single number. Once a curve exists, a holder can fix a rate, a trader can take the other side, and everything above it, hedges, packages, curve exposure, has somewhere to stand.</p>
+<div class="close">
+  <p>The assets are coming onchain. The money is coming onchain. The missing layer is the rate market that connects them.</p>
+  <p>That is what Continua Finance is building.</p>
+</div>
+
+<h2>Glossary in plain English</h2>
+<dl class="gloss">
+  <div><dt>Atomic settlement</dt><dd>All linked legs complete together, or none does.</dd></div>
+  <div><dt>Carry</dt><dd>The income or cost of holding a position through time, before market changes.</dd></div>
+  <div><dt>Central counterparty</dt><dd>Stands between buyers and sellers, nets obligations and manages default risk.</dd></div>
+  <div><dt>Forward rate</dt><dd>The rate implied today for a future period.</dd></div>
+  <div><dt>Haircut</dt><dd>The safety discount on collateral: a 2% haircut counts $100 as $98.</dd></div>
+  <div><dt>Netting</dt><dd>Offsetting amounts owed so only the net remains.</dd></div>
+  <div><dt>Notional</dt><dd>The reference amount for calculating payments. A measuring stick, not the amount exchanged.</dd></div>
+  <div><dt>Repo</dt><dd>Secured short-term funding: securities for cash, reversed later.</dd></div>
+  <div><dt>SOFR</dt><dd>Overnight cash borrowing cost secured by US Treasuries.</dd></div>
+  <div><dt>Yield curve</dt><dd>The market's price list for money across maturities.</dd></div>
+  <div><dt>Yield strip</dt><dd>A tradable claim on the yield of one defined future period, separated from the principal and from the other periods.</dd></div>
+</dl>
+
+    <section class="sources"><span class="mono">Sources</span><ol><li id="src-1"><span class="mono">[1]</span> <a href="https://www.isda.org/a/rGkiE/Key-Trends-in-the-Size-and-Composition-of-OTC-Derivatives-Markets-in-the-Second-Half-of-2025.pdf" target="_blank" rel="noopener noreferrer">www.isda.org/a/rGkiE/Key-Trends-in-the-Size-and-Composition-of-OTC-Derivatives-Markets-in-the-Second-Half-of-2025.pdf</a></li><li id="src-3"><span class="mono">[3]</span> <a href="https://www.newyorkfed.org/markets/reference-rates/sofr" target="_blank" rel="noopener noreferrer">www.newyorkfed.org/markets/reference-rates/sofr</a></li><li id="src-4"><span class="mono">[4]</span> <a href="https://www.bis.org/publications/aer-2025/next-generation-monetary-financial-system" target="_blank" rel="noopener noreferrer">www.bis.org/publications/aer-2025/next-generation-monetary-financial-system</a></li><li id="src-6"><span class="mono">[6]</span> <a href="https://cdm.finos.org/docs/cdm-overview" target="_blank" rel="noopener noreferrer">cdm.finos.org/docs/cdm-overview</a></li><li id="src-7"><span class="mono">[7]</span> <a href="https://www.isda.org/a/MGYgE/CDM-for-Collateral-Initiatives-Factsheet-2025.pdf" target="_blank" rel="noopener noreferrer">www.isda.org/a/MGYgE/CDM-for-Collateral-Initiatives-Factsheet-2025.pdf</a></li><li id="src-8"><span class="mono">[8]</span> <a href="https://www.newyorkfed.org/newsevents/speeches/2024/per241112" target="_blank" rel="noopener noreferrer">www.newyorkfed.org/newsevents/speeches/2024/per241112</a></li><li id="src-9"><span class="mono">[9]</span> <a href="https://tellerwindow.newyorkfed.org/2026/09/01/a-framework-for-understanding-the-u-s-treasury-repo-market" target="_blank" rel="noopener noreferrer">tellerwindow.newyorkfed.org/2026/09/01/a-framework-for-understanding-the-u-s-treasury-repo-market</a></li><li id="src-10"><span class="mono">[10]</span> <a href="https://cftc.gov/sites/default/files/2020-06/Risk%20Transfer%20Using%20Interest%20Rate%20Swaps%20March%202020_ada.pdf" target="_blank" rel="noopener noreferrer">cftc.gov/sites/default/files/2020-06/Risk%20Transfer%20Using%20Interest%20Rate%20Swaps%20March%202020_ada.pdf</a></li><li id="src-11"><span class="mono">[11]</span> <a href="https://cftc.gov/sites/default/files/2024-09/Pension_IRS_Aug2024_ada.pdf" target="_blank" rel="noopener noreferrer">cftc.gov/sites/default/files/2024-09/Pension_IRS_Aug2024_ada.pdf</a></li><li id="src-12"><span class="mono">[12]</span> <a href="https://www.bis.org/publ/qtrpdf/r_qt1912i.htm" target="_blank" rel="noopener noreferrer">www.bis.org/publ/qtrpdf/r_qt1912i.htm</a></li><li id="src-13"><span class="mono">[13]</span> <a href="https://www.isda.org/isda-solutions-infohub/cdm" target="_blank" rel="noopener noreferrer">www.isda.org/isda-solutions-infohub/cdm</a></li><li id="src-16"><span class="mono">[16]</span> <a href="https://www.bis.org/publ/bisbull107.pdf" target="_blank" rel="noopener noreferrer">www.bis.org/publ/bisbull107.pdf</a></li><li id="src-17"><span class="mono">[17]</span> <a href="https://www.bis.org/fsi/fsisummaries/exsum_23905.htm" target="_blank" rel="noopener noreferrer">www.bis.org/fsi/fsisummaries/exsum_23905.htm</a></li><li id="src-18"><span class="mono">[18]</span> <a href="https://www.isda.org/a/I7XTE/ISDA-Legal-Guidelines-for-Smart-Derivatives-Contracts-IRDs.pdf" target="_blank" rel="noopener noreferrer">www.isda.org/a/I7XTE/ISDA-Legal-Guidelines-for-Smart-Derivatives-Contracts-IRDs.pdf</a></li><li id="src-19"><span class="mono">[19]</span> <a href="https://bis.org/publ/othp95.pdf" target="_blank" rel="noopener noreferrer">bis.org/publ/othp95.pdf</a></li><li id="src-20"><span class="mono">[20]</span> <a href="https://www.bis.org/statistics/rpfx22.htm" target="_blank" rel="noopener noreferrer">www.bis.org/statistics/rpfx22.htm</a></li><li id="src-21"><span class="mono">[21]</span> <a href="https://app.rwa.xyz/treasuries" target="_blank" rel="noopener noreferrer">app.rwa.xyz/treasuries</a></li></ol></section>
+  </article>
+  <footer class="foot">
+    <a href="index.html#gap">← Back to the gap</a>
+    <a href="note16">Note 16 · The rate market should not be a private club →</a>
+    <a href="index.html#join">Join the waitlist →</a>
+  </footer>
+</div>
+</body>
+</html>
