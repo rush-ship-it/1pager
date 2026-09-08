@@ -619,6 +619,8 @@
   }
 </style>
 <script>try{var _t=localStorage.getItem('continua-theme');if(_t)document.documentElement.dataset.theme=_t;}catch(e){}
+/* keep the address clean: /index.html shows as / */
+if(location.pathname==='/index.html'){try{history.replaceState(null,'','/'+location.search+location.hash)}catch(e){}}
 </script>
 </head>
 <body>
