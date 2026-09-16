@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>One-pager — Continua Finance</title>
+<meta name="description" content="Continua is a novel perpetual interest rate AMM. It enables users to trade the yield that will be earned by an income-generating asset during a specific future window of time.">
+<meta name="theme-color" content="#F2F0E9">
+<meta property="og:title" content="Continua Finance — one-pager">
+<meta property="og:description" content="Continua is a novel perpetual interest rate AMM. It enables users to trade the yield that will be earned by an income-generating asset during a specific future window of time.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Continua Finance">
+<meta property="og:url" content="https://continua.finance/onepager">
+<meta property="og:image" content="https://continua.finance/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://continua.finance/og.png">
+<link rel="canonical" href="https://continua.finance/onepager">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bone:#F2F0E9;--ink:#100E0A;--blue:#0B82CB;--red:#DB3829;--yellow:#EEAD2B;--bg:#F2F0E9;--fg:#100E0A;
+    --line:color-mix(in srgb,var(--fg) 14%,transparent);--line2:color-mix(in srgb,var(--fg) 32%,transparent);
+    --muted:color-mix(in srgb,var(--fg) 62%,transparent);--plate:color-mix(in srgb,var(--bg) 70%,transparent);
+    --pad:clamp(20px,3.4vw,52px);--ease:cubic-bezier(.16,1,.3,1)}
+  :root[data-theme="dark"]{--bg:#100E0A;--fg:#F2F0E9}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:var(--bg)}
+  body{background:var(--bg);color:var(--fg);font-family:'Lexend',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  img,svg{max-width:100%;display:block}
+  .mono{font-family:'Martian Mono',monospace;text-transform:uppercase;letter-spacing:.18em;font-size:clamp(8.5px,.7vw,10.5px);line-height:1.5}
+  .wrap{width:min(1100px,calc(100% - var(--pad)*2));margin:0 auto}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .brand img{width:28px;height:28px}
+  .brand span{font-weight:600;letter-spacing:-.04em;font-size:18px}
+  .top a.back{text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:300;display:inline-flex;gap:8px;align-items:center}
+  .top a.back:hover{color:var(--fg)}
+
+  /* the head: the brand's post template, the orbit lines held still */
+  .head{position:relative;overflow:hidden;border:1px solid var(--line2);border-radius:clamp(22px,2.6vw,34px);
+    display:grid;padding:clamp(24px,3.4vw,48px);isolation:isolate;min-height:min(440px,52vh)}
+  .head .illo{position:absolute;right:-6%;top:-10%;width:58%;height:78%;z-index:0}
+  .illo ellipse{fill:none;stroke-width:2.2;stroke:currentColor}
+  .illo .k-r{color:var(--red)}.illo .k-b{color:var(--blue)}.illo .k-y{color:var(--yellow)}.illo .k-k{color:var(--fg)}
+  .illo .dash{stroke-dasharray:10 8}
+  .illo .dot{stroke-dasharray:0 7;stroke-linecap:round;stroke-width:2.6}
+  .illo .nodes circle{fill:var(--fg)}
+  .head .kicker{position:relative;z-index:1;color:var(--muted);display:flex;gap:18px;flex-wrap:wrap;align-self:start}
+  .rule{position:relative;z-index:1;display:flex;gap:4px;margin-top:12px;align-self:start}
+  .rule i{display:block;height:3px;width:34px;border-radius:2px}
+  .rule i:nth-child(1){background:var(--yellow)}.rule i:nth-child(2){background:var(--blue)}.rule i:nth-child(3){background:var(--red)}
+  .head h1{position:relative;z-index:1;font-size:clamp(34px,5vw,68px);line-height:.98;letter-spacing:-.03em;font-weight:600;max-width:12ch;
+    margin-top:clamp(80px,16vh,150px)}
+  .head .lede{position:relative;z-index:1;margin-top:18px;font-weight:400;font-size:clamp(16px,1.6vw,21px);line-height:1.42;letter-spacing:-.01em;max-width:56ch}
+
+  /* summary */
+  .summary{margin:clamp(20px,2.6vw,32px) auto 0;display:grid;grid-template-columns:minmax(120px,.22fr) 1fr;gap:clamp(16px,3vw,44px);
+    border-bottom:1px solid var(--line2);padding-bottom:clamp(20px,2.6vw,32px)}
+  .summary .mono{color:var(--muted);padding-top:6px}
+  .summary p{font-weight:300;font-size:clamp(15.5px,1.25vw,17.5px);line-height:1.55;color:var(--fg);max-width:70ch}
+  .summary p+p{margin-top:12px}
+
+  /* the two columns, like the sheet */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);margin-top:clamp(22px,3vw,40px)}
+  .col>section+section{margin-top:clamp(24px,3vw,40px)}
+  h2{display:flex;align-items:center;gap:12px;font-family:'Martian Mono',monospace;text-transform:uppercase;letter-spacing:.18em;font-size:10.5px;font-weight:500;color:var(--muted);
+    margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  h2 svg{width:14px;height:14px;overflow:visible;flex:none}
+  p{font-weight:300;font-size:15px;line-height:1.55;color:var(--fg)}
+  p+p,ol+p,ul+p{margin-top:12px}
+  p.lead-in{margin-top:12px}
+  .num{list-style:none;counter-reset:n;margin-top:12px;display:grid;gap:8px}
+  .num li{counter-increment:n;display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;font-weight:300;font-size:15px;line-height:1.55}
+  .num li:before{content:counter(n);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);
+    font-family:'Martian Mono',monospace;font-size:10px;margin-top:2px}
+  .num li b{font-weight:500}
+  .dots{list-style:none;margin-top:12px;display:grid;gap:8px}
+  .dots li{display:grid;grid-template-columns:18px 1fr;gap:12px;align-items:start;font-weight:300;font-size:15px;line-height:1.55}
+  .dots li svg{width:14px;height:20px;overflow:visible;margin-top:2px}
+  .dots li b{font-weight:500}
+  .vaults li:nth-child(1) svg ellipse{fill:var(--yellow)}.vaults li:nth-child(2) svg ellipse{fill:var(--blue)}.vaults li:nth-child(3) svg ellipse{fill:var(--red)}
+  .allow li svg ellipse{fill:none;stroke:currentColor;stroke-width:1.8}
+  .allow li:nth-child(odd) svg ellipse{stroke-dasharray:3 3}
+
+  /* get in touch: the slab, no fundraise copy */
+  .touch{margin-top:clamp(24px,3vw,40px);border-radius:clamp(18px,2vw,26px);background:var(--fg);color:var(--bg);padding:clamp(20px,2.4vw,30px);
+    display:grid;gap:14px;justify-items:start}
+  .touch .mono{color:color-mix(in srgb,var(--bg) 62%,transparent)}
+  .touch p{color:var(--bg);font-size:clamp(17px,1.5vw,21px);font-weight:400;line-height:1.35;letter-spacing:-.01em;max-width:24ch}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;background:var(--bg);color:var(--fg);text-decoration:none;
+    font-weight:500;font-size:15px;margin-top:4px}
+  .btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .btn:hover{opacity:.88}
+
+  .foot{margin:clamp(40px,6vw,72px) auto 40px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    border-top:1px solid var(--line2);padding-top:22px;color:var(--muted)}
+  .foot .brand img{width:22px;height:22px}
+  .foot a.home{text-decoration:none;font-weight:400;color:var(--fg);display:inline-flex;gap:8px;align-items:center}
+  .foot a.home:hover{text-decoration:underline}
+
+  @media(max-width:860px){
+    .cols{grid-template-columns:1fr}
+    .summary{grid-template-columns:1fr;gap:8px}
+    .head .illo{width:100%;right:-14%;top:-12%;height:48%}
+    .head h1{margin-top:clamp(120px,26vh,200px)}
+  }
+  @media print{
+    .top,.foot .home{display:none}
+    .head{min-height:0;border:0;padding:0}
+    .head .illo{display:none}
+    .head h1{margin-top:8px}
+    .touch{border:1px solid #000;background:none;color:#000}
+    .touch p,.btn{color:#000}
+    .btn{border:1px solid #000;background:none}
+  }
+</style>
+<script>try{var _t=localStorage.getItem('continua-theme');if(_t)document.documentElement.dataset.theme=_t;}catch(e){}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="/"><img src="assets/mark.svg" alt=""><span>Continua</span></a>
+    <a class="back" href="/">← Back to the site</a>
+  </div>
+
+  <header class="head">
+    <svg class="illo" viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <ellipse cx="420" cy="150" rx="150" ry="150" class="k-r"/>
+  <ellipse cx="300" cy="300" rx="210" ry="120" class="k-y" transform="rotate(-22 300 300)"/>
+  <ellipse cx="500" cy="330" rx="120" ry="210" class="k-b dash" transform="rotate(30 500 330)"/>
+  <ellipse cx="180" cy="120" rx="170" ry="70" class="k-k dot" transform="rotate(14 180 120)"/>
+  <ellipse cx="360" cy="240" rx="250" ry="90" class="k-r dot" transform="rotate(-8 360 240)"/>
+  <ellipse cx="120" cy="360" rx="90" ry="140" class="k-b" transform="rotate(-30 120 360)"/>
+  <g class="nodes"><circle cx="296" cy="164" r="5"/><circle cx="452" cy="296" r="5"/><circle cx="171" cy="257" r="5"/><circle cx="521" cy="118" r="5"/></g>
+</svg>
+    <div class="kicker mono"><span>Investor overview</span><span>2026</span></div>
+    <div class="rule" aria-hidden="true"><i></i><i></i><i></i></div>
+    <h1>Continua Finance</h1>
+    <p class="lede">Continua is a novel perpetual interest rate AMM. It enables users to trade the yield that will be earned by an income-generating asset during a specific future window of time.</p>
+  </header>
+
+  <div class="summary">
+    <span class="mono">Summary</span>
+    <div>
+      <p>Instead of calculating the total yield an asset earns between now and a maturity date, Continua defines individual time periods in the future and separates out the yield earned in each. Then it turns the rights to yield from each of those time periods into a token that is priced and traded independently.</p>
+      <p>Users can buy or sell the yield from a specific window of time in order to hedge, lock in a rate, or express a more granular view on how rates will change. The market automatically extends as each period ends, so the future yield of any asset can be traded in perpetuity without requiring new markets to be created at every maturity.</p>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="col">
+      <section>
+        <h2><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="var(--yellow)"/></svg>How it works</h2>
+        <p>A user deposits a yield-bearing asset, such as a tokenized Treasury bill, into Continua. The asset is separated into two components:</p>
+        <ol class="num">
+          <li><span><b>Principal:</b> This is the claim on the underlying asset and the right to receive new yield strips as the market automatically extends.</span></li>
+          <li><span><b>Yield strips:</b> These are the individual claims on the yield generated during each period along the curve (Q1, Q2, Q3, and Q4, for example).</span></li>
+        </ol>
+        <p>Each strip is a separate token with its own automated market maker (AMM) and an independent price. The individual AMMs for each strip share the same pool of the yield-bearing asset, so one pool of capital can provide liquidity across the entire curve.</p>
+      </section>
+      <section>
+        <h2><svg viewBox="0 0 14 14" aria-hidden="true"><ellipse cx="7" cy="7" rx="3.5" ry="6" fill="var(--blue)" transform="rotate(24 7 7)"/></svg>The rate market for on-chain finance</h2>
+        <p>Continua’s first product is the venue and infrastructure for creating and trading future yield strips. Initial users will be treasuries, funds, protocols, and trading desks that hold large positions in on-chain assets with variable yield, plus individual traders seeking to express views in these markets.</p>
+        <p class="lead-in">Continua allows users to:</p>
+        <ul class="dots allow">
+          <li><svg viewBox="0 0 14 20" aria-hidden="true"><ellipse cx="7" cy="10" rx="4.5" ry="8"/></svg><span>Convert variable future yield into fixed income</span></li>
+          <li><svg viewBox="0 0 14 20" aria-hidden="true"><ellipse cx="7" cy="10" rx="4.5" ry="8"/></svg><span>Hedge or trade specific rate windows</span></li>
+          <li><svg viewBox="0 0 14 20" aria-hidden="true"><ellipse cx="7" cy="10" rx="4.5" ry="8"/></svg><span>Gain capital-efficient exposure to yield without purchasing the underlying asset</span></li>
+          <li><svg viewBox="0 0 14 20" aria-hidden="true"><ellipse cx="7" cy="10" rx="4.5" ry="8"/></svg><span>Price the future yield of any income-generating asset via a forward curve</span></li>
+          <li><svg viewBox="0 0 14 20" aria-hidden="true"><ellipse cx="7" cy="10" rx="4.5" ry="8"/></svg><span>Access interest rate markets through transparent on-chain contracts</span></li>
+          <li><svg viewBox="0 0 14 20" aria-hidden="true"><ellipse cx="7" cy="10" rx="4.5" ry="8"/></svg><span>Build and access automated strategies that allocate and rebalance across periods</span></li>
+        </ul>
+      </section>
+    </div>
+    <div class="col">
+      <section>
+        <h2><svg viewBox="0 0 14 14" aria-hidden="true"><ellipse cx="7" cy="7" rx="2.2" ry="6" fill="var(--red)" transform="rotate(-10 7 7)"/></svg>Vault products</h2>
+        <p>By virtue, Continua initially offers 3 distinct inventory deployment options for uncorrelated yield:</p>
+        <ul class="dots vaults">
+          <li><svg viewBox="0 0 14 20" aria-hidden="true"><ellipse cx="7" cy="10" rx="6" ry="6"/></svg><span><b>AMM Liquidity Vaults</b> | Liquidity providers deploy inventory with no IL and earn via continuous fees.</span></li>
+          <li><svg viewBox="0 0 14 20" aria-hidden="true"><ellipse cx="7" cy="10" rx="3.5" ry="7" transform="rotate(20 7 10)"/></svg><span><b>Auto-Quant Vault</b> | Autonomously manages yield strips for end-users, providing asymmetric returns.</span></li>
+          <li><svg viewBox="0 0 14 20" aria-hidden="true"><ellipse cx="7" cy="10" rx="2.4" ry="7" transform="rotate(-12 7 10)"/></svg><span><b>LVR Insurance Vault</b> | Actuary vault that is managed by a curators &amp; agents.</span></li>
+        </ul>
+      </section>
+      <section>
+        <h2><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="0 3.6" stroke-linecap="round"/></svg>Looking forward</h2>
+        <p>The long-term opportunity for Continua is to become the default infrastructure for pricing and trading future income on-chain. Continua enables the creation of tradable forward curves for any tokenized asset; this will allow the largest markets that exist in traditional finance to move on-chain and benefit from the transparency, accessibility, and composability that’s unique to on-chain finance.</p>
+        <p>Continua will be the venue through which this transition happens.</p>
+      </section>
+      <section class="touch">
+        <span class="mono">Get in touch</span>
+        <p>For investment discussions, please contact us.</p>
+        <a class="btn" href="mailto:raise@continua.finance?subject=Continua%20Finance">Get in touch <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+      </section>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <a class="brand" href="/"><img src="assets/mark.svg" alt=""><span>Continua</span></a>
+    <span class="mono">Continua Finance · 2026</span>
+    <a class="home" href="/">← Back to the site</a>
+  </footer>
+</div>
+</body>
+</html>
