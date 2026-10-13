@@ -356,46 +356,7 @@
   .way.swap b{font-family:'Martian Mono',monospace;font-weight:500;color:var(--yellow);font-size:clamp(17px,1.5vw,22px);letter-spacing:-.02em}
   :root[data-theme="dark"] .way.swap b{color:var(--yellow-d)}
 
-  /* ══ 04 · VAULTS — the mark is a dial. It turns, lands a petal on the rail, and that vault opens. ══ */
-  .eco-stage{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,28px);align-items:center;
-    height:clamp(400px,34vw,460px);border:1px solid var(--line2);border-radius:clamp(18px,2vw,26px);
-    background:var(--plate);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);overflow:hidden;
-    padding:clamp(16px,2vw,28px);--vc:var(--yellow)}
-  .eco-dial{position:relative;display:grid;place-items:center;height:100%;min-width:0}
-  .eco-dial svg{width:min(100%,clamp(240px,28vw,380px));max-height:100%;height:auto;overflow:visible}
-  .eco-dial .petal{cursor:pointer;transition:opacity .45s var(--ease);transform-box:fill-box;transform-origin:center;animation:breathe 6s ease-in-out infinite}
-  .eco-dial #p2{animation-delay:-1.2s}.eco-dial #p3{animation-delay:-2.4s}.eco-dial #p4{animation-delay:-3.6s}.eco-dial #p5{animation-delay:-4.8s}
-  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
-  .eco-stage.dwell .petal{opacity:.2}
-  .eco-stage.dwell .petal.on{opacity:1;animation:pop 1.6s var(--ease) infinite alternate}
-  @keyframes pop{from{transform:scale(1.08)}to{transform:scale(1.14)}}
-  .eco-dial .ring{fill:none;stroke:currentColor;stroke-width:2;stroke-dasharray:0 9;stroke-linecap:round;opacity:.45;
-    transform-box:fill-box;transform-origin:center;animation:orbit 48s linear infinite}
-  .eco-dial .ring.r2{stroke-dasharray:14 12;opacity:.26;animation-duration:70s;animation-direction:reverse}
-  .eco-dial .rail{fill:none;stroke:var(--vc);stroke-width:2.2;stroke-dasharray:0 8;stroke-linecap:round;opacity:0;transition:opacity .4s var(--ease),stroke .4s var(--ease)}
-  .eco-stage.dwell .rail{opacity:.9;animation:march 3s linear infinite}
-  .eco-dial .pointer circle{fill:var(--fg);transition:fill .4s var(--ease)}
-  .eco-dial .pointer path{stroke:var(--bg);stroke-width:2;stroke-linecap:round;fill:none}
-  .eco-dial .pointer{transform-box:fill-box;transform-origin:center;transition:transform .35s var(--ease)}
-  .eco-stage.dwell .pointer{transform:scale(1.4)}
-  .eco-stage.dwell .pointer circle{fill:var(--vc)}
-  .eco-panel{display:grid;gap:14px;align-content:center;min-width:0}
-  .eco-tabs{display:flex;gap:6px;flex-wrap:wrap}
-  .eco-tab{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;border:1px solid var(--line2);background:none;
-    cursor:pointer;font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--muted);
-    transition:border-color .3s var(--ease),color .3s var(--ease),background-color .3s var(--ease)}
-  .eco-tab i{width:8px;height:8px;border-radius:50%;background:var(--tc);display:inline-block}
-  .eco-tab:hover{color:var(--fg)}
-  .eco-tab.on{border-color:var(--tc);color:var(--fg);background:color-mix(in srgb,var(--tc) 14%,transparent)}
-  .eco-info{border-left:3px solid var(--vc);padding:4px 0 4px 18px;transition:opacity .45s var(--ease),transform .45s var(--ease),border-color .4s var(--ease)}
-  .eco-stage.spin .eco-info{opacity:.3;transform:translateX(-8px)}
-  .eco-info .mono{color:var(--muted);display:flex;align-items:center;gap:8px}
-  .eco-info .mono i{width:9px;height:9px;border-radius:50%;background:var(--vc);display:inline-block;transition:background-color .4s var(--ease)}
-  .eco-info h3{margin-top:8px;font-size:clamp(22px,2.2vw,32px);font-weight:600;letter-spacing:-.03em;line-height:1.05}
-  .eco-info p{margin-top:10px;color:var(--muted);font-weight:300;font-size:clamp(14px,1.15vw,15.5px);line-height:1.5;max-width:44ch;min-height:4.6em}
-  .eco-hint{color:var(--muted);opacity:.7}
-
-  /* ══ 05 · WRITING — the post template as a featured note, then the compact links ══ */
+  /* ══ 04 · WRITING — the post template as a featured note, then the compact links ══ */
   .feature{display:grid;grid-template-columns:1.05fr .95fr;border:1px solid var(--line2);border-radius:clamp(20px,2.4vw,30px);
     overflow:hidden;background:var(--plate);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
     transition:transform .3s var(--ease),border-color .3s var(--ease);margin-bottom:clamp(12px,1.8vw,20px)}
@@ -447,7 +408,7 @@
   .link-card:hover .ico [stroke-dasharray]{animation:orbit 5s linear infinite}
   .link-card:hover .ico rect{animation:spinx 3s ease-in-out infinite}
 
-  /* ══ 06 · JOIN — the field again, on the slab, the way the page opened ══ */
+  /* ══ 05 · JOIN — the field again, on the slab, the way the page opened ══ */
   .join{border-radius:clamp(22px,2.6vw,34px);background:var(--slab);color:var(--slab-fg);
     padding:clamp(28px,4vw,52px);position:relative;overflow:hidden;isolation:isolate;
     border:1px solid var(--line);min-height:min(440px,60vh);
@@ -503,8 +464,6 @@
     .mech .wash{background:linear-gradient(180deg,var(--slab) 0%,color-mix(in srgb,var(--slab) 80%,transparent) 44%,transparent 64%)}
     .mech-copy{align-self:start}
     .ways{grid-template-columns:1fr 1fr}
-    .eco-stage{grid-template-columns:1fr}
-    .eco-dial svg{width:min(100%,220px)}
     .links-grid{grid-template-columns:1fr 1fr}
     .feature{grid-template-columns:1fr}
     .feature-art{border-right:0;border-bottom:1px solid var(--line);min-height:300px}
@@ -522,12 +481,6 @@
     .feature-art{border-right:1px solid var(--line);border-bottom:0;min-height:320px}
     .feature-art .illo{width:64%;height:72%;top:-12%;right:-8%}
     .feature-title{margin-top:0}
-  }
-  @media(max-width:980px){
-    .eco-stage{height:auto;gap:14px;padding:18px}
-    .eco-dial{height:auto}
-    .eco-info p{min-height:0}
-    .eco-hint{display:none}
   }
   @media(max-width:640px){
     .hero{gap:18px}
@@ -569,7 +522,7 @@
     .word i,.line>span>i{transform:none}
     .on:after{transform:scaleX(1)}
     .wl,.hero-foot,.lockup img,.tagline{opacity:1}
-    .eco-dial .petal,.eco-dial .ring,.eco-dial .rail,.flow-ring{animation:none!important}
+    .flow-ring{animation:none!important}
   }
 </style>
 <script>try{var _t=localStorage.getItem('continua-theme');if(_t)document.documentElement.dataset.theme=_t;}catch(e){}
@@ -639,7 +592,6 @@ if(location.pathname==='/index.html'){try{history.replaceState(null,'','/')}catc
         <a href="#gap">The gap</a>
         <a href="#curve">The curve</a>
         <a href="#strips">Strips</a>
-        <a href="#vaults">Vaults</a>
         <a href="#writing">Writing</a>
       </nav>
       <a class="pill" href="#join">Join waitlist</a>
@@ -759,53 +711,11 @@ if(location.pathname==='/index.html'){try{history.replaceState(null,'','/')}catc
       </div>
     </section>
 
-    <!-- ══ 04 · VAULTS ══ -->
-    <section id="vaults" data-rhythm="1">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div><span class="mono">04 · The vaults</span><h2>Not just an instrument.<br>An ecosystem.</h2></div>
-          <p class="lead">Every vault is an ERC-4626 share over the same strips and the same reserve. What changes is where the return comes from. One reserve, five ways in — five petals of the same mark.</p>
-        </div>
-        <div class="eco-stage reveal dwell" id="eco">
-          <div class="eco-dial" aria-hidden="true">
-            <svg viewBox="40 40 380 380" id="ecoSvg">
-              <circle class="ring g-k" cx="231" cy="231" r="168"/>
-              <circle class="ring r2 g-k" cx="231" cy="231" r="142"/>
-              <line class="rail" x1="381" y1="231" x2="420" y2="231"/>
-              <g id="dial" transform="rotate(180 231 231)">
-                <path id="p1" class="petal" data-v="1" d="M164.77 283.05C193.452 283.05 216.704 259.737 216.704 230.98C216.704 202.222 193.452 178.909 164.77 178.909C136.088 178.909 112.836 202.222 112.836 230.98C112.836 259.737 136.088 283.05 164.77 283.05Z" fill="#EEAD2B"/>
-              <path id="p4" class="petal" data-v="4" d="M255.158 310.691C259.536 282.27 251.596 257.452 237.422 255.257C223.249 253.062 208.211 274.322 203.833 302.743C199.454 331.164 207.395 355.982 221.568 358.177C235.741 360.372 250.78 339.112 255.158 310.691Z" fill="#0B82CB"/>
-              <path id="p5" class="petal" data-v="5" d="M331.725 322.144C336.796 317.061 324.465 296.455 304.183 276.12C283.902 255.786 263.35 243.422 258.28 248.506C253.209 253.59 265.54 274.195 285.822 294.53C306.103 314.865 326.655 327.228 331.725 322.144Z" fill="#EEAD2B"/>
-              <path id="p3" class="petal" data-v="3" d="M304.484 186.253C324.766 165.918 337.097 145.313 332.026 140.229C326.956 135.145 306.404 147.509 286.123 167.844C265.841 188.178 253.51 208.784 258.581 213.868C263.651 218.951 284.203 206.588 304.484 186.253Z" fill="#0B82CB"/>
-              <path id="p2" class="petal" data-v="2" d="M237.57 206.831C251.756 204.728 259.857 179.961 255.662 151.513C251.467 123.064 236.565 101.707 222.378 103.81C208.191 105.913 200.091 130.68 204.286 159.128C208.481 187.577 223.383 208.934 237.57 206.831Z" fill="#DB3829"/>
-              </g>
-              <g class="pointer"><circle cx="373" cy="231" r="7"/><path d="M369 227 377 235"/></g>
-            </svg>
-          </div>
-          <div class="eco-panel">
-            <div class="eco-tabs" role="tablist" aria-label="Vaults">
-              <button class="eco-tab on" type="button" role="tab" data-v="1" style="--tc:var(--yellow)"><i></i>01</button>
-              <button class="eco-tab" type="button" role="tab" data-v="2" style="--tc:var(--red)"><i></i>02</button>
-              <button class="eco-tab" type="button" role="tab" data-v="3" style="--tc:var(--blue)"><i></i>03</button>
-              <button class="eco-tab" type="button" role="tab" data-v="4" style="--tc:var(--blue)"><i></i>04</button>
-              <button class="eco-tab" type="button" role="tab" data-v="5" style="--tc:var(--yellow)"><i></i>05</button>
-            </div>
-            <div class="eco-info" role="tabpanel" aria-live="polite">
-              <span class="mono"><i></i><b id="ecoNum">01 · Vault</b></span>
-              <h3 id="ecoName">AMM vault</h3>
-              <p id="ecoCopy">Supply the book and earn a share of the fee on every strip that changes hands. No pool to pick, no roll to execute.</p>
-            </div>
-            <p class="eco-hint mono">Click a petal to hold a vault · click away and the dial keeps turning</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ 05 · WRITING & CODE ══ -->
+    <!-- ══ 04 · WRITING & CODE ══ -->
     <section id="writing" data-rhythm="0">
       <div class="wrap">
         <div class="section-head reveal">
-          <div><span class="mono">05 · Read the work</span><h2>The rate market should be readable, and reachable.</h2></div>
+          <div><span class="mono">04 · Read the work</span><h2>The rate market should be readable, and reachable.</h2></div>
           <p class="lead">Notes on market structure for people who live with rates but were never handed the tools. The mechanism, the research and the launch notes live in the open.</p>
         </div>
         <a class="feature reveal" href="note16">
@@ -854,7 +764,7 @@ if(location.pathname==='/index.html'){try{history.replaceState(null,'','/')}catc
       </div>
     </section>
 
-    <!-- ══ 06 · JOIN ══ -->
+    <!-- ══ 05 · JOIN ══ -->
     <section id="join" style="padding-top:clamp(8px,1.5vw,20px)" data-rhythm="1">
       <div class="wrap">
         <div class="join reveal">
@@ -889,7 +799,7 @@ if(location.pathname==='/index.html'){try{history.replaceState(null,'','/')}catc
       <a class="brand" href="#top"><img src="assets/mark.svg" alt=""><span>Continua</span></a>
       <nav class="footer-links" aria-label="Footer">
         <a href="#gap">The gap</a><a href="#curve">The curve</a><a href="#strips">Strips</a>
-        <a href="#vaults">Vaults</a><a href="#writing">Writing</a>
+        <a href="#writing">Writing</a>
         <a href="https://github.com/Continua-Finance" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://medium.com/@continuafi" target="_blank" rel="noopener noreferrer">Medium</a>
         <a href="https://x.com/continuafi" target="_blank" rel="noopener noreferrer">X</a>
@@ -1467,71 +1377,6 @@ window.FIELD = makeField(document.getElementById('art'), { fixed: true, mask: tr
     const was = visible; visible = e.isIntersecting;
     if (visible && !was) requestAnimationFrame(frame);
   }), { threshold: .05 }).observe(svgH.closest('.way') || svgH);
-})();
-
-/* ── 04 · the dial: the mark turns, lands a petal on the rail, and that vault opens.
-      Click a petal to hold it; click away and the dial keeps turning. ── */
-(() => {
-  const stage = document.getElementById('eco'); if (!stage) return;
-  const dial = document.getElementById('dial'), petals = [...dial.querySelectorAll('.petal')], tabs = [...stage.querySelectorAll('.eco-tab')];
-  const num = document.getElementById('ecoNum'), name = document.getElementById('ecoName'), copy = document.getElementById('ecoCopy');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const V = {
-    1: { name: 'AMM vault', col: '#EEAD2B', copy: 'Supply the book and earn a share of the fee on every strip that changes hands. No pool to pick, no roll to execute.' },
-    2: { name: 'Morpho curation', col: '#DB3829', copy: 'Automated listings and price oracles for yield products that need cleaner curation.' },
-    3: { name: 'AutoQuant vault', col: '#0B82CB', copy: 'Every quarter it reads the curve against what each asset is really paying: buying where it beats the market, selling where the market looks too optimistic, sized by conviction.' },
-    4: { name: 'LVR insurance', col: '#0B82CB', copy: 'Underwrite the loss liquidity providers absorb silently everywhere else, and collect the premium. A circuit breaker caps what the vault can lose.' },
-    5: { name: 'RFQ vault', col: '#EEAD2B', copy: 'Deposit and let a curator run the request-for-quote book on your behalf, for anyone who thinks quoting size beats supplying the AMM.' }
-  };
-  /* where each petal sits on the mark, in degrees from the centre; the rail is at 0° (three o'clock) */
-  const ANG = { 1: 180, 2: -90, 3: -40, 4: 90, 5: 40 };
-  const ORDER = [1, 4, 5, 3, 2];                     /* the order petals reach the rail turning clockwise */
-  const DWELL = 2600, SPIN = 1600;
-  let rot = 180, from = 180, to = 180, t0 = 0, phase = 'dwell', dwellT = 0, cur = 1, pending = 1, held = null, visible = false;
-  function apply(v) {
-    cur = v; const d = V[v];
-    stage.style.setProperty('--vc', d.col);
-    num.textContent = String(v).padStart(2, '0') + ' · Vault'; name.textContent = d.name; copy.textContent = d.copy;
-    petals.forEach(p => p.classList.toggle('on', +p.dataset.v === v));
-    tabs.forEach(t => { const on = +t.dataset.v === v; t.classList.toggle('on', on); t.setAttribute('aria-selected', on); });
-  }
-  function targetFor(v, forward) {
-    let t = -ANG[v];
-    if (forward) { while (t <= rot + 30) t += 360; }              /* keep turning the same way, never backwards */
-    else { const d = ((t - rot) % 360 + 540) % 360 - 180; t = rot + d; }   /* on a click, take the short way round */
-    return t;
-  }
-  function startSpin(v, forward, now) {
-    if (reduce) { rot = targetFor(v, false); dial.setAttribute('transform', 'rotate(' + rot + ' 231 231)'); apply(v); phase = 'dwell'; dwellT = now; return; }
-    from = rot; to = targetFor(v, forward); t0 = now; pending = v; phase = 'spin';
-    stage.classList.add('spin'); stage.classList.remove('dwell');
-  }
-  function land(now) {
-    rot = to; phase = 'dwell'; dwellT = now; apply(pending);
-    stage.classList.remove('spin'); stage.classList.add('dwell');
-  }
-  function frame(now) {
-    if (!visible) return;
-    if (phase === 'spin') {
-      const e = Math.min(1, (now - t0) / SPIN), k = e < .5 ? 4*e*e*e : 1 - Math.pow(-2*e + 2, 3) / 2;
-      rot = from + (to - from) * k;
-      if (e >= 1) land(now);
-    } else if (held == null && !reduce && now - dwellT > DWELL) {
-      startSpin(ORDER[(ORDER.indexOf(cur) + 1) % ORDER.length], true, now);
-    }
-    dial.setAttribute('transform', 'rotate(' + rot.toFixed(2) + ' 231 231)');
-    requestAnimationFrame(frame);
-  }
-  function select(v) { held = v; if (v === cur && phase === 'dwell') { dwellT = performance.now(); return; } startSpin(v, false, performance.now()); }
-  petals.forEach(p => p.addEventListener('click', e => { e.stopPropagation(); select(+p.dataset.v); }));
-  tabs.forEach(t => t.addEventListener('click', e => { e.stopPropagation(); select(+t.dataset.v); }));
-  const release = () => { if (held != null) { held = null; dwellT = performance.now(); } };
-  document.addEventListener('click', e => { if (!e.target.closest('.petal,.eco-tab')) release(); });
-  apply(1);
-  new IntersectionObserver(es => es.forEach(e => {
-    const was = visible; visible = e.isIntersecting;
-    if (visible && !was) { const n = performance.now(); dwellT = n; if (phase === 'spin') { t0 = n; from = rot; } requestAnimationFrame(frame); }
-  }), { threshold: .2 }).observe(stage);
 })();
 </script>
 </body>
